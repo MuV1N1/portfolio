@@ -38,16 +38,28 @@ main {
     overflow:scroll;
 }
 
-.title{
+.title {
+    position: relative;
     color: #222;
     margin-bottom: 1rem;
-    border-left: 4px solid #0400ff;
-    padding-left: 0.5rem;
+    padding-left: 0.75rem; /* a bit more for the "border" space */
     font-size: 1.5rem;
 }
+
+.title::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 5px;
+    height: 100%;
+    background: linear-gradient(180deg, rgb(115, 255, 0) 0%, rgb(121, 255, 248) 100%);
+    border-radius: 2px;
+}
+
 .portfolio-grid{
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
     gap: 1.5rem;
 }
 .portfolio-item {
