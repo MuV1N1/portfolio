@@ -58,29 +58,29 @@ main {
     transition: transform 0.2s, box-shadow 0.2s;
     text-align: center;
 }
-.portfolio-item a {
-    display: inline-block;
-    margin-top: 0.5rem;
-    color: #0400ff;
-    text-decoration: none;
-    font-weight: bold;
-}
-.portfolio-item a:hover {
-    text-decoration: underline;
-}
-.no-decoration a{
-    text-decoration: none !important;
-}   
-.no-decoration a:hover{
-    text-decoration: none !important;
-}
 
 .portfolio-item:hover {
     transform: translateY(-5px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.377);
 }
 
+.portfolio-item a {
+    color: #222;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.portfolio-item a:hover {
+    text-decoration: underline;
+}
+
+
 .mt-1 {
     margin-top: 1rem;
 }
 
+hr {
+    border: none;
+    border-top: 1px solid #ddd;
+    margin: 1rem 0;
+}
