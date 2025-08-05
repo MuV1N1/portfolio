@@ -63,6 +63,8 @@ main {
     gap: 1.5rem;
 }
 .portfolio-item {
+    display: flex;
+    flex-direction: column;
     background: #fafafa;
     border-radius: 8px;
     box-shadow: 0 1px 4px rgba(0,0,0,0.05);
@@ -70,7 +72,11 @@ main {
     transition: transform 0.2s, box-shadow 0.2s;
     text-align: center;
 }
+.portfolio-footer {
 
+    align-items: baseline;
+
+}
 .portfolio-item:hover {
     transform: translateY(-5px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.377);
