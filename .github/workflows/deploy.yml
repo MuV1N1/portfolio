@@ -1,4 +1,5 @@
-name: Deploy Vite site to GitHub Pages
+name: Pages
+description: Deploys the project to GitHub Pages using the latest build artifacts.
 
 on:
   push:
