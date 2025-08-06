@@ -1,16 +1,16 @@
 # Portfolio
 
-## Run
+### Run
 
 ```
 npm run dev
 ```
 
-## Build
+### Build
 ```
 npm run build
 ```
 
-## Deploy on GitHub-Pages
+### Deploy on GitHub-Pages
 
 To **Deploy** just commit and push the changes to default page
