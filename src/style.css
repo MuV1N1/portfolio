@@ -48,6 +48,11 @@ footer {
     position: relative;
 }
 
+footer a {
+    color: #f20000;
+    text-decoration: none;
+}
+
 .title {
     position: relative;
     color: #222;
@@ -63,8 +68,7 @@ footer {
     left: 0;
     width: 5px;
     height: 100%;
-    background: linear-gradient(180deg, rgb(60, 60, 60) 0%, rgb(2, 255, 255) 50%, rgb(60, 60, 60) 100%);
-    border-radius: 2px;
+    background: #f20000;
 }
 
 .portfolio-grid {
@@ -87,7 +91,6 @@ footer {
 
 .portfolio-footer {
     margin-top: auto;
-    ;
 }
 
 .portfolio-item:hover {
