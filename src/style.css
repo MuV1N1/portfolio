@@ -12,21 +12,29 @@ body {
     min-height: 100vh;
 }
 
-header {
-    background: #222;
+.header {
+    background: linear-gradient(90deg, #222 40%, #f20000 100%);
     color: #fff;
-    padding: 2rem 0;
+    padding: 2.5rem 0 2rem 0;
     text-align: center;
+    box-shadow: 0 4px 16px rgba(34, 34, 34, 0.12);
 }
 
-header h1 {
-    font-size: 2.5rem;
+.header-title {
+    font-size: 3rem;
+    font-weight: 700;
+    letter-spacing: 1px;
     margin-bottom: 0.5rem;
+    color: #fff;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
-header p {
-    font-size: 1.2rem;
-    color: #bbb;
+.header-subtitle {
+    font-size: 1.3rem;
+    color: #ffeaea;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+    margin-bottom: 0;
 }
 
 main {
@@ -40,6 +48,7 @@ main {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
     overflow: scroll;
 }
+
 footer {
     text-align: center;
     padding: 1rem;
@@ -59,17 +68,14 @@ footer a {
     margin-bottom: 1rem;
     padding-left: 0.75rem;
     font-size: 1.5rem;
+    border-left: 5px solid #f20000;
+    border-radius: 10px;
+    border-right: 5px solid #f20000;
+    text-align: center;
+    background: #e2e2e2;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
 }
 
-.title::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 5px;
-    height: 100%;
-    background: #f20000;
-}
 
 .portfolio-grid {
     display: grid;
@@ -108,7 +114,6 @@ footer a {
     text-decoration: underline;
 }
 
-
 .mt-1 {
     margin-top: 1rem;
 }
@@ -117,4 +122,14 @@ hr {
     border: none;
     border-top: 1px solid #ddd;
     margin: 1rem 0;
+}
+
+#a-fricke {
+    text-decoration: none;
+    color: #f20000;
+}
+
+#a-fricke:hover {
+    text-decoration: underline;
+    color: #c00000;
 }
