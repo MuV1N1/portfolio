@@ -38,14 +38,15 @@ main {
     background: #fff;
     border-radius: 10px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-    overflow:scroll;
+    overflow: scroll;
 }
 
 .title {
     position: relative;
     color: #222;
     margin-bottom: 1rem;
-    padding-left: 0.75rem; /* a bit more for the "border" space */
+    padding-left: 0.75rem;
+    /* a bit more for the "border" space */
     font-size: 1.5rem;
 }
 
@@ -56,11 +57,11 @@ main {
     left: 0;
     width: 5px;
     height: 100%;
-    background: linear-gradient(180deg, rgb(83, 96, 97) 0%, rgb(63, 114, 114) 30%, rgb(121, 255, 248) 100%);
+    background: linear-gradient(180deg, rgb(83, 96, 97) 0%, rgb(2, 255, 255) 50%, rgb(83, 96, 97) 100%);
     border-radius: 2px;
 }
 
-.portfolio-grid{
+.portfolio-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
     gap: 1.5rem;
@@ -71,7 +72,7 @@ main {
     flex-direction: column;
     background: #fafafa;
     border-radius: 8px;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
     padding: 1rem;
     transition: transform 0.2s, box-shadow 0.2s;
     text-align: center;
@@ -79,7 +80,8 @@ main {
 }
 
 .portfolio-footer {
-    margin-top: auto;;
+    margin-top: auto;
+    ;
 }
 
 .portfolio-item:hover {
