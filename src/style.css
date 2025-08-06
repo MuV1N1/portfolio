@@ -13,7 +13,7 @@ body {
 }
 
 .header {
-    background: linear-gradient(90deg, #222 40%, #f20000 100%);
+    background: #222;
     color: #fff;
     padding: 2.5rem 0 2rem 0;
     text-align: center;
