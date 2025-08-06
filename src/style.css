@@ -4,8 +4,17 @@
     box-sizing: border-box;
     font-family: 'Segoe UI', Arial, sans-serif;
 }
+html {
+    scroll-behavior: smooth;
+}
+
+*::selection {
+    background: #f2000056;
+}
 
 body {
+    display: flex;
+    flex-direction: column;
     background: #f5f6fa;
     color: #222;
     line-height: 1.6;
@@ -38,7 +47,8 @@ body {
 }
 
 main {
-    max-width: 60vw;
+    max-width: 900px;
+    width: 60%;
     margin: 2rem auto;
     padding: 2rem;
     text-align: left;
@@ -93,6 +103,7 @@ footer a {
     transition: transform 0.2s, box-shadow 0.2s;
     text-align: center;
     height: 100%;
+    visibility: hidden;
 }
 
 .portfolio-footer {
@@ -100,7 +111,8 @@ footer a {
 }
 
 .portfolio-item:hover {
-    transform: translateY(-5px);
+    transform: translateY(-5px) scale(1.02);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.377);
 }
 
@@ -133,3 +145,60 @@ hr {
     text-decoration: underline;
     color: #c00000;
 }
+
+@keyframes fadeInUp {
+    0% {
+
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    100% {
+        opacity: 1;
+        visibility: unset;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-in-up {
+    animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.portfolio-item:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.portfolio-item:nth-child(2) {
+    animation-delay: 0.3s;
+}
+
+.portfolio-item:nth-child(3) {
+    animation-delay: 0.6s;
+}
+
+.portfolio-item:nth-child(4) {
+    animation-delay: 0.9s;
+}
+
+@keyframes zoomIn {
+    0% {
+        opacity: 0;
+        transform: scale(0);
+    }
+
+    1%{
+        opacity: 0.1;
+        transform: scale(0.001) rotate(0deg);
+    }
+
+    100% {
+        visibility: unset;
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.animate-zoom-in {
+    animation: zoomIn 0.7s ease-out forwards;
+}
+
