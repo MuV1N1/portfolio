@@ -18,14 +18,17 @@ header {
     padding: 2rem 0;
     text-align: center;
 }
+
 header h1 {
     font-size: 2.5rem;
     margin-bottom: 0.5rem;
 }
+
 header p {
     font-size: 1.2rem;
     color: #bbb;
 }
+
 main {
     max-width: 60vw;
     margin: 2rem auto;
@@ -53,7 +56,7 @@ main {
     left: 0;
     width: 5px;
     height: 100%;
-    background: linear-gradient(180deg, rgb(115, 255, 0) 0%, rgb(121, 255, 248) 100%);
+    background: linear-gradient(180deg, rgb(83, 96, 97) 0%, rgb(63, 114, 114) 30%, rgb(121, 255, 248) 100%);
     border-radius: 2px;
 }
 
@@ -62,6 +65,7 @@ main {
     grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
     gap: 1.5rem;
 }
+
 .portfolio-item {
     display: flex;
     flex-direction: column;
@@ -73,9 +77,11 @@ main {
     text-align: center;
     height: 100%;
 }
+
 .portfolio-footer {
     margin-top: auto;;
 }
+
 .portfolio-item:hover {
     transform: translateY(-5px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.377);
