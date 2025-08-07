@@ -11,11 +11,17 @@
 </head>
 
 <body>
-  <script type="module" src="/src/main.ts"></script>
 
   <header class="header">
-    <h1 class="header-title">Das bin ich!</h1>
-    <p class="header-subtitle">Willkommen auf meiner Portfolio-Seite</p>
+    <div class="header-center">
+      <h1 class="header-title">Das bin ich!</h1>
+      <p class="header-subtitle">Willkommen auf meiner Portfolio-Seite</p>
+    </div>
+
+    <label class="theme-switch" aria-label="Toggle Dark Mode">
+      <input type="checkbox" id="theme-toggle" />
+      <span class="slider sun moon"></span>
+    </label>
   </header>
 
   <main>
@@ -82,6 +88,8 @@
   </footer>
 
   <div id="app"></div>
+  <script type="module" src="/src/scripts/themeSwitch.ts"></script>
+  <script type="module" src="/src/main.ts"></script>
 </body>
 
 </html>
