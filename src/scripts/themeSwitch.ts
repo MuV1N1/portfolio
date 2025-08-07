@@ -4,7 +4,7 @@ const darkScheme = window.matchMedia('(prefers-color-scheme: dark)');
 if (toggle !== null) {
     if (localStorage.theme === 'light' ||
         (!('theme' in localStorage) && darkScheme.matches)) {
-        document.documentElement.classList.add('dark');
+        document.documentElement.classList.add('light');
         toggle.checked = true;
     }
 
