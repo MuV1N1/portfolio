@@ -135,6 +135,7 @@ body, main, .header, footer, .portfolio-item, .title, .portfolio-grid {
     text-align: center;
     gap: 1rem;
     overflow: hidden;
+
 }
 
 .header::before {
