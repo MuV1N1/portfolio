@@ -108,6 +108,21 @@ body {
     min-height: 100vh;
 }
 
+body, main, .header, footer, .portfolio-item, .title, .portfolio-grid {
+    transition: background 0.5s cubic-bezier(0.4,0,0.2,1), color 0.5s cubic-bezier(0.4,0,0.2,1);
+}
+
+/* Pulse animation for theme switch knob */
+@keyframes theme-knob-pulse {
+    0% { box-shadow: 0 0 0 0 var(--primary-color, #f20000); }
+    70% { box-shadow: 0 0 0 10px rgba(242,0,0,0); }
+    100% { box-shadow: 0 0 0 0 rgba(242,0,0,0); }
+}
+
+.theme-animating .slider:before {
+    animation: theme-knob-pulse 0.5s;
+}
+
 
 .header {
     background: var(--header-bg);
@@ -119,6 +134,22 @@ body {
     align-items: center;
     text-align: center;
     gap: 1rem;
+    overflow: hidden;
+}
+
+.header::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--bg-color);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 1;
+    transition: opacity 0.5s cubic-bezier(0.4,0,0.2,1);
+}
+
+.theme-animating .header::before {
+    opacity: 1;
 }
 
 .header-center {
@@ -152,6 +183,7 @@ footer {
 footer a {
     color: var(--primary-color);
     text-decoration: none;
+    transition: color 0.5s cubic-bezier(0.4,0,0.2,1);
 }
 
 
@@ -199,10 +231,10 @@ footer a {
     border-radius: 10px;
     box-shadow: 0 1px 4px var(--portfolio-item-shadow);
     padding: 1rem;
-    transition: transform 0.2s, box-shadow 0.2s;
     text-align: center;
     height: 100%;
     visibility: hidden;
+    transition: background 0.5s cubic-bezier(0.4,0,0.2,1), color 0.5s cubic-bezier(0.4,0,0.2,1);
 }
 
 .portfolio-footer {
@@ -219,6 +251,7 @@ footer a {
     color: var(--text-color);
     text-decoration: none;
     font-weight: bold;
+    transition: color 0.5s cubic-bezier(0.4,0,0.2,1);
 }
 
 .portfolio-item a:hover {

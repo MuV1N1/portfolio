@@ -2,7 +2,7 @@ const toggle = document.getElementById('theme-toggle') as HTMLInputElement;
 const darkScheme = window.matchMedia('(prefers-color-scheme: dark)');
 
 if (toggle !== null) {
-    if (localStorage.theme === 'dark' ||
+    if (localStorage.theme === 'light' ||
         (!('theme' in localStorage) && darkScheme.matches)) {
         document.documentElement.classList.add('dark');
         toggle.checked = true;
@@ -11,7 +11,9 @@ if (toggle !== null) {
 
     toggle.addEventListener('change', (e) => {
         e.preventDefault();
-        console.log('Theme toggle changed:', toggle.checked);
+        setTimeout(() => {
+            document.documentElement.classList.remove('theme-animating');
+        }, 500);
         if (toggle.checked) {
             document.documentElement.classList.add('dark');
             localStorage.theme = 'dark';
