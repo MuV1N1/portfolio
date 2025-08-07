@@ -1,11 +1,57 @@
 :root {
+    --bg-color: #111;
+    --text-color: #ddd;
+    --primary-color: #f20000;
+
+    --main-item-shadow: #eeeeeed;
+
+    --header-bg: #333;
+    --header-text-color: #eee;
+    --header-subtitle-color: #ddd;
+    --header-text-shadow: #ffffff9a;
+
+    --footer-bg: #333;
+    --footer-text-color: #fff;
+
+    --title-background: #333;
+
+    --hr-color: #ddd;
+
+    --a-fricke-hover: #ff0000;
+
+    --main-bg-color: #222;
+
+    --selection-background: #f5000056;
+
+    --portfolio-item-shadow: #ffffff1f;
+    --portfolio-item-hover-shadow: #ffffff6f;
+    --portfolio-item-bg: #333;
+    --portfolio-item-hover-bg: #222;
+
+    --sun-color: #ffe066;
+    --sun-glow: #fff2a8;
+    --moon-color: #b3c6ff;
+    --moon-glow: #8ec8ff;
+
+    /*--slider-bg-start: #2c3e50;*/
+    --slider-bg-start: #001aff;
+    --slider-bg-end: #23272f;
+    --slider-border: #fff;
+    --slider-shadow: #00000040;
+    --slider-shadow-knob: #00000060;
+    --slider-shadow-knob2: #00000030;
+    --knob-bg-start: #444;
+    --knob-bg-end: #222;
+}
+
+.light {
     --bg-color: #fff;
     --text-color: #222;
     --primary-color: #f20000;
 
     --main-item-shadow: #00000033;
 
-    --header-bg: linear-gradient(90deg, #f20000 0%, #ddd 25%, #eee 50%, #ddd 75%, #f20000);
+    --header-bg: #ddd;
     --header-text-color: #000;
     --header-subtitle-color: #222;
     --header-text-shadow: #0000009a;
@@ -18,6 +64,8 @@
     --hr-color: #ddd;
 
     --a-fricke-hover: #c00000;
+
+    --main-bg-color: #f8f8f8;
 
     --selection-background: #f2000056;
 
@@ -42,49 +90,6 @@
 
 }
 
-.dark {
-    --bg-color: #222;
-    --text-color: #ddd;
-    --primary-color: #f20000;
-
-    --main-item-shadow: #ffffffd7;
-
-    --header-bg: linear-gradient(90deg, #f20000 0%, #333 25%, #222 50%, #333 75%, #f20000);
-    --header-text-color: #fff;
-    --header-subtitle-color: #ddd;
-    --header-text-shadow: #ffffff9a;
-
-    --footer-bg: #444;
-    --footer-text-color: #fff;
-
-    --title-background: #2e2e2e;
-
-    --hr-color: #ddd;
-
-    --a-fricke-hover: #ff0000;
-
-    --selection-background: #f5000056;
-
-    --portfolio-item-shadow: #ffffff1f;
-    --portfolio-item-hover-shadow: #ffffff6f;
-    --portfolio-item-bg: #2e2e2e;
-    --portfolio-item-hover-bg: #323232;
-
-    --sun-color: #ffe066;
-    --sun-glow: #fff2a8;
-    --moon-color: #b3c6ff;
-    --moon-glow: #8ec8ff;
-
-    /*--slider-bg-start: #2c3e50;*/
-    --slider-bg-start: #001aff;
-    --slider-bg-end: #23272f;
-    --slider-border: #fff;
-    --slider-shadow: #00000040;
-    --slider-shadow-knob: #00000060;
-    --slider-shadow-knob2: #00000030;
-    --knob-bg-start: #444;
-    --knob-bg-end: #222;
-}
 
 * {
     margin: 0;
@@ -186,6 +191,7 @@ main {
     border-radius: 10px;
     box-shadow: 0 2px 8px var(--main-item-shadow);
     overflow: scroll;
+    background-color: var(--main-bg-color);
 }
 
 footer {
@@ -251,14 +257,16 @@ footer a {
     visibility: hidden;
 }
 
+
 .portfolio-footer {
     margin-top: auto;
 }
 
 .portfolio-item:hover {
-    transform: translateY(50px) scale(1.02);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transform: translateY(-0px) scale(1.02);
     box-shadow: 0 4px 8px var(--portfolio-item-hover-shadow);
+    background: var(--portfolio-item-hover-bg);
+    color: var(--text-color);
 }
 
 .portfolio-item a {
@@ -274,10 +282,10 @@ footer a {
 
 .theme-switch {
     position: absolute;
-    top: 1rem;
+    bottom: 40%;
     right: 1rem;
     display: inline-block;
-    width: 80px;
+    width: 90px;
     height: 45px;
     z-index: 10;
 }
@@ -333,7 +341,7 @@ input:checked+.slider {
 }
 
 input:checked+.slider:before {
-    transform: translateX(35px);
+    transform: translateX(45px);
     content: "🌙";
     color: var(--moon-color);
     text-shadow: 0 0 12px var(--moon-glow), 0 0 10px #00ffea8b;
