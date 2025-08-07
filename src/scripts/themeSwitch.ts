@@ -17,7 +17,6 @@ function applyInitialTheme() {
 applyInitialTheme();
 
 const toggle = document.getElementById('theme-toggle') as HTMLInputElement;
-
 if (toggle) {
   toggle.addEventListener('change', () => {
     if (toggle.checked) {
