@@ -63,7 +63,6 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
       await pb.collection('users').authWithPassword(usernameInput.value, passwordInput.value);
       if (pb.authStore.isValid) {
-        localStorage.setItem('isAuthenticated', 'true'); // kept for compatibility with other scripts
         renderLoginButton(true);
         modal.style.display = 'none';
         window.location.reload();
