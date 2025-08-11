@@ -49,7 +49,7 @@
     --text-color: #ddd;
     --primary-color: #f20000;
 
-    --main-item-shadow: #eeeeeed;
+    --main-item-shadow: #eeeeeeed;
 
     --header-bg: #333;
     --header-text-color: #eee;
@@ -79,7 +79,6 @@
     --moon-color: #b3c6ff;
     --moon-glow: #8ec8ff;
 
-    /*--slider-bg-start: #2c3e50;*/
     --slider-bg-start: #001aff;
     --slider-bg-end: #23272f;
     --slider-border: #fff;
