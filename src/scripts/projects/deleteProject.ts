@@ -1,11 +1,12 @@
 import PocketBase from 'pocketbase';
-const pb = new PocketBase('http://127.0.0.1:8090');
+const pb = new PocketBase('https://muv1n-portfolio.pockethost.io/');
 
 const grid = document.getElementById('portfolio-grid') as HTMLDivElement | null;
 
 if (grid) {
   grid.addEventListener('click', async (e) => {
     const target = e.target as HTMLElement;
+
     if (!target.classList.contains('delete-project-btn')) return;
 
     const projectId = target.getAttribute('data-id');

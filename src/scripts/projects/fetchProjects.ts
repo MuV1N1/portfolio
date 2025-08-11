@@ -1,5 +1,5 @@
 import PocketBase from 'pocketbase';
-const pb = new PocketBase('http://127.0.0.1:8090');
+const pb = new PocketBase('https://muv1n-portfolio.pockethost.io/');
 
 const portfolioGrid = (document.getElementById('portfolio-grid') as HTMLDivElement) || (document.querySelector('.portfolio-grid') as HTMLDivElement);
 
@@ -14,25 +14,27 @@ function applyStagger(container: HTMLDivElement) {
 }
 
 export default function fetchProjects() {
-    projects.forEach((project) => {
-        const projectName = project.liveDemoUrl ? '<a href="' + project.liveDemoUrl + '" target="_blank" rel="noopener noreferrer">' + project.name + '</a>' : project.name;
-        const projectDescription = project.description;
-        const projectSourceCode = project.sourceCodeUrl ? '<a href="' + project.sourceCodeUrl + '" target="_blank" rel="noopener noreferrer">Source code</a>' : 'Kein Source Code';
-        const deleteBtn = isAuthenticated ? '<button class="delete-project-btn" data-id="' + project.id + '">🗑️</button>' : '';
+  projects.forEach((project) => {
+    const projectName = project.liveDemoUrl ? '<a href="' + project.liveDemoUrl + '" target="_blank" rel="noopener noreferrer">' + project.name + '</a>' : project.name;
+    const projectDescription = project.description;
+    const projectSourceCode = project.sourceCodeUrl
+      ? '<a href="' + project.sourceCodeUrl + '" target="_blank" rel="noopener noreferrer">Source code</a>'
+      : '<span class="no-source">Kein Source Code</span>';
+    const deleteBtn = isAuthenticated ? '<button class="delete-project-btn" data-id="' + project.id + '">🗑️</button>' : '';
+    const editBtn = isAuthenticated ? '<button class="edit-project-btn" data-id="' + project.id + '">✏️</button>' : '';
 
-        portfolioGrid.innerHTML += /*html*/ `
+    portfolioGrid.innerHTML += /*html*/ `
          <div class="portfolio-item animate-zoom-in">
           <h3>${projectName}</h3>
           <p>${projectDescription}</p>
           <div class="portfolio-footer">
-            <hr>
-            ${projectSourceCode} ${deleteBtn}
+            ${editBtn}
+            <div class="footer-right">${projectSourceCode} ${deleteBtn}</div>
           </div>
         </div>
     `
-    });
+  });
 
-    // Apply staggered animation delays after rendering
-    applyStagger(portfolioGrid);
+  applyStagger(portfolioGrid);
 }
 fetchProjects();

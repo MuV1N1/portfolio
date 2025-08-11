@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "pb": "./pocketbase/pocketbase serve",
-    "vite": "vite",
-    "dev": "concurrently -k -n PB,VITE -c yellow,green \"npm:pb\" \"npm:vite\"",
+    "dev": "vite",
+    "pbxvite": "concurrently -k -n PB,VITE -c yellow,green \"npm:pb\" \"npm:dev\"",
     "build": "tsc && vite build",
     "preview": "vite preview"
   },
