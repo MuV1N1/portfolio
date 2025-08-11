@@ -84,7 +84,6 @@ createProjectForm.addEventListener('submit', async (e) => {
             projectDescriptionInput.value = '';
             projectLiveDemoInput.value = '';
             projectSourceCodeInput.value = '';
-            // immediately render the new card
             appendProjectCard(record);
         })
         .catch((error) => {

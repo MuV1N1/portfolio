@@ -31,6 +31,7 @@ loginButton.addEventListener('click', () => {
   if (isAuth) {
     localStorage.setItem('isAuthenticated', 'false');
     setAuthenticatedUI(false);
+    window.location.reload();
     return;
   }
   modal.style.display = 'block';
@@ -56,6 +57,7 @@ loginForm.addEventListener('submit', async (e) => {
     await pb.collection('users').authWithPassword(usernameInput.value, passwordInput.value);
     localStorage.setItem('isAuthenticated', 'true');
     setAuthenticatedUI(true);
+    window.location.reload();
     modal.style.display = 'none';
   } catch (error) {
     alert('Login fehlgeschlagen. Bitte überprüfen Sie Ihre Eingaben.');

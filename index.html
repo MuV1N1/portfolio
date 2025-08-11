@@ -104,6 +104,32 @@
     </div>
   </div>
 
+  <div class="modal" id="edit-project-modal">
+    <div class="modal-content">
+      <span class="close-modal">&times;</span>
+      <h2>Projekt bearbeiten</h2>
+      <form id="edit-project-form">
+        <div class="form-group">
+          <label for="edit-project-name">Projektname</label>
+          <input type="text" id="edit-project-name" name="edit-project-name" required>
+        </div>
+        <div class="form-group">
+          <label for="edit-project-description">Projektbeschreibung</label>
+          <textarea id="edit-project-description" name="edit-project-description" required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="edit-project-url">Projekt URL</label>
+          <input type="url" id="edit-project-url" name="edit-project-url">
+        </div>
+        <div class="form-group">
+          <label for="edit-project-source-code-url">SourceCode URL</label>
+          <input type="url" id="edit-project-source-code-url" name="edit-project-source-code-url">
+        </div>
+        <button type="submit" class="form-submit">Speichern</button>
+      </form>
+    </div>
+  </div>
+
   <div id="app"></div>
 </body>
 

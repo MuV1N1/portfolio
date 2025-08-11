@@ -282,25 +282,6 @@ footer a {
     margin-left: 0;
 }
 
-.portfolio-footer a.source-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    padding: 0.3rem 0.6rem;
-    border: 2px solid var(--portfolio-item-hover-shadow);
-    border-radius: 999px;
-    background: transparent;
-    color: var(--text-color);
-    text-decoration: none;
-    font-weight: 600;
-    white-space: nowrap;
-}
-
-.portfolio-footer a.source-link:hover {
-    border-color: var(--primary-color);
-    color: var(--primary-color);
-}
-
 .edit-project-btn,
 .delete-project-btn {
     display: inline-flex;
@@ -688,8 +669,11 @@ hr {
     color: var(--text-color);
 }
 
-.form-group input {
+.form-group input,
+textarea {
     width: 100%;
+    max-width: 100%;
+    min-width: 100%;
     padding: 0.75rem;
     border: 2px solid var(--portfolio-item-hover-shadow);
     border-radius: 5px;
@@ -698,7 +682,8 @@ hr {
     transition: border-color 0.3s;
 }
 
-.form-group input:focus {
+.form-group input:focus,
+.form-group textarea:focus {
     outline: none;
     border-color: var(--primary-color);
 }
