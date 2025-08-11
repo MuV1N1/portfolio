@@ -8,6 +8,8 @@
   <title>Marvin Kleiner</title>
   <script type="module" src="/src/scripts/themeSwitch.ts"></script>
   <script type="module" src="/src/main.ts"></script>
+  <script type="module" src="/src/scripts/projects.ts"></script>
+  <script type="module" src="/src/scripts/login.ts"></script>
   <link rel="stylesheet" href="./src/style.css">
 </head>
 
@@ -21,6 +23,10 @@
       <input type="checkbox" id="theme-toggle" />
       <span class="slider"></span>
     </label>
+    <label class="login-button" for="login-modal">
+      <button class="login-button-icon"></button>
+      <span class="login-text">Login</span>
+    </label>
   </header>
   <main>
     <section>
@@ -28,13 +34,17 @@
       <p>
         <strong>Hi, ich bin Marvin, 19 Jahre alt.</strong><br>
         Nach der zwölften Klasse habe ich mich für eine Ausbildung zum <b>Fachinformatiker für
-          Anwendungsentwicklung</b> bei <b><a target="_blank" href="https://fricke.de" id="a-fricke">FRICKE</a></b> entschieden.<br>
+          Anwendungsentwicklung</b> bei <b><a target="_blank" href="https://fricke.de" id="a-fricke">FRICKE</a></b>
+        entschieden.<br>
         Dort sammle ich praktische Erfahrungen in der
         <b>Softwareentwicklung</b> und arbeite an spannenden Projekten.<br>
       </p>
     </section>
     <section>
-      <h2 class="title mt-1">Meine Projekte</h2>
+      <div class="projects-header">
+        <h2 class="title mt-1">Meine Projekte</h2>
+        <button class="create-project-btn" id="create-project-btn">+ Projekt erstellen</button>
+      </div>
       <div class="portfolio-grid">
         <div class="portfolio-item animate-zoom-in">
           <h3><a href="https://qr-code-generator-997659.gitlab.io/">QR-Code Generator</a></h3>
@@ -47,7 +57,8 @@
         <div class="portfolio-item animate-zoom-in">
           <h3><a href="https://djmichap.de">DJMichap.de</a></h3>
           <p>Moderne, mit React umgesetzte Homepage für DJ Michael. Responsive Design und einfache Verwaltung der
-            Inhalte. <p class="text-color-primary">Noch in der Entwicklung.</p>
+            Inhalte.
+          <p class="text-color-primary">Noch in der Entwicklung.</p>
           </p>
           <div class="portfolio-footer">
             <hr>
@@ -81,6 +92,26 @@
     <p>Kontakt: <a href="mailto:marvin.kleiner1910@gmail.com">Marvin.kleiner1910@gmail.com</a>, <a
         href="https://github.com/muv1n1">GitHub</a>, <a href="https://gitlab.com/muv1n/">GitLab</a></p>
   </footer>
+
+  <div class="modal" id="login-modal">
+    <div class="modal-content">
+
+      <span class="close-modal">&times;</span>
+      <h2>Login</h2>
+      <form id="login-form">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" id="username" name="username" required>
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" required>
+        </div>
+        <button type="submit" class="login-submit">Login</button>
+      </form>
+    </div>
+  </div>
+
   <div id="app"></div>
 </body>
 

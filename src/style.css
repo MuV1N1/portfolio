@@ -35,7 +35,6 @@
 
     --slider-bg-start: #f8ed13;
     --slider-bg-end: #ffffff;
-    --slider-border: var(--text-color);
     --slider-shadow: #d9ff0018;
     --slider-shadow-knob: #f1e20830;
     --slider-shadow-knob2: #00000010;
@@ -81,7 +80,6 @@
 
     --slider-bg-start: #001aff;
     --slider-bg-end: #23272f;
-    --slider-border: #fff;
     --slider-shadow: #00000040;
     --slider-shadow-knob: #00000060;
     --slider-shadow-knob2: #00000030;
@@ -286,6 +284,7 @@ footer a {
     position: absolute;
     bottom: 40%;
     right: 1rem;
+    top: 1rem;
     display: inline-block;
     width: 90px;
     height: 45px;
@@ -308,7 +307,7 @@ footer a {
     background: linear-gradient(90deg, var(--slider-bg-start) 60%, var(--slider-bg-end) 100%);
     transition: background 0.4s, box-shadow 0.4s;
     border-radius: 1.5rem;
-    border: 2.5px solid var(--slider-border);
+    border: 2.5px solid var(--primary-color);
     box-shadow: 0 2px 12px var(--slider-shadow), 0 1.5px 4px var(--slider-shadow-knob2);
     display: flex;
     align-items: center;
@@ -353,6 +352,74 @@ input:checked+.slider:before {
 
 .theme-switch:hover .slider:before {
     box-shadow: 0 0 16px 2px var(--primary-color), 0 2px 8px var(--slider-shadow-knob);
+}
+
+.login-button {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 0.75rem 0.35rem 0.35rem;
+    background: var(--portfolio-item-bg);
+    color: var(--text-color);
+    border: 2px solid var(--primary-color);
+    border-radius: 999px;
+    cursor: pointer;
+    text-decoration: none;
+    box-shadow: 0 2px 8px var(--slider-shadow-knob2);
+    transition: background 0.2s, color 0.2s, box-shadow 0.3s, transform 0.1s, border-color 0.2s;
+    z-index: 11;
+}
+
+.login-button:hover {
+    background: var(--portfolio-item-hover-bg);
+    box-shadow: 0 4px 12px var(--portfolio-item-hover-shadow);
+    transform: translateY(-1px);
+}
+
+.login-button:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 4px var(--portfolio-item-shadow);
+}
+
+.login-button-icon {
+    width: 36px;
+    height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 2px solid var(--primary-color);
+    background: transparent;
+    color: var(--primary-color);
+    outline: none;
+    transition: background 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+}
+
+.login-button-icon::before {
+    content: "🔒";
+    font-size: 1rem;
+    line-height: 1;
+}
+
+.login-button:hover .login-button-icon {
+    background: var(--primary-color);
+    color: #fff;
+    border-color: var(--primary-color);
+}
+
+.login-text {
+    color: var(--text-color);
+    font-weight: 600;
+    user-select: none;
+}
+
+.login-button:focus-within .login-button-icon,
+.login-button-icon:focus {
+    box-shadow: 0 0 0 3px rgba(242, 0, 0, 0.25);
 }
 
 #a-fricke {
@@ -432,4 +499,133 @@ hr {
     .header-subtitle {
         font-size: 1.1rem;
     }
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 100;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+}
+
+.modal-content {
+  background: var(--portfolio-item-bg);
+  margin: 15% auto;
+  padding: 2rem;
+  border: 2px solid var(--primary-color);
+  border-radius: 10px;
+  width: 90%;
+  max-width: 400px;
+  position: relative;
+  box-shadow: 0 4px 20px var(--portfolio-item-shadow);
+}
+
+.close-modal {
+  position: absolute;
+  right: 1rem;
+  top: 0.5rem;
+  font-size: 1.8rem;
+  cursor: pointer;
+  color: var(--text-color);
+}
+
+.close-modal:hover {
+  color: var(--primary-color);
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--text-color);
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px solid var(--portfolio-item-hover-shadow);
+  border-radius: 5px;
+  background: var(--bg-color);
+  color: var(--text-color);
+  transition: border-color 0.3s;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.login-submit {
+  width: 100%;
+  padding: 0.75rem;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: opacity 0.3s;
+}
+
+.login-submit:hover {
+  opacity: 0.9;
+}
+
+#login-modal:target {
+  display: block;
+}
+.projects-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--text-color);
+    margin-bottom: 1rem;
+    padding: 0.75rem;
+    font-size: 1.5rem;
+    border-left: 3px solid var(--primary-color);
+    border-radius: 10px;
+    border-right: 3px solid var(--primary-color);
+    background: var(--title-background);
+}
+
+.projects-header .title {
+    margin-bottom: 0;
+    padding: 0;
+    border: none;
+    background: transparent;
+    font-size: inherit;
+}
+
+.create-project-btn {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 0.4rem 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+    box-shadow: 0 2px 4px var(--portfolio-item-shadow);
+    flex-shrink: 0;
+}
+
+.create-project-btn:hover {
+    background: var(--a-fricke-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px var(--portfolio-item-hover-shadow);
+}
+
+.create-project-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 2px var(--portfolio-item-shadow);
 }
