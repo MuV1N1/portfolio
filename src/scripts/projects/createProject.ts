@@ -2,11 +2,13 @@ import PocketBase from 'pocketbase';
 const pb = new PocketBase('http://127.0.0.1:8090');
 const createProjectButton = document.getElementById('create-project-btn') as HTMLButtonElement;
 const modal = document.getElementById('create-project-modal') as HTMLDivElement;
-const closeBtn = document.querySelector('.close-modal') as HTMLSpanElement;
+const closeBtn = document.querySelector('#create-project-modal .close-modal') as HTMLSpanElement;
 const createProjectForm = document.getElementById('create-project-form') as HTMLFormElement
 const body = document.querySelector('body') as HTMLBodyElement;
 
+// helper to append a single project card without full reload
 const portfolioGrid = document.getElementById('portfolio-grid') as HTMLDivElement | null;
+const isAuthenticated = (typeof localStorage !== 'undefined') && localStorage.getItem('isAuthenticated') === 'true';
 function appendProjectCard(project: any) {
     if (!portfolioGrid) return;
     const nameHtml = project?.liveDemoUrl
@@ -15,6 +17,7 @@ function appendProjectCard(project: any) {
     const sourceHtml = project?.sourceCodeUrl
         ? `<a href="${project.sourceCodeUrl}" target="_blank" rel="noopener noreferrer">Source code</a>`
         : 'Kein Source Code';
+    const deleteBtn = isAuthenticated ? `<button class=\"delete-project-btn\" data-id=\"${project.id}\">Löschen</button>` : '';
 
     const wrapper = document.createElement('div');
     wrapper.className = 'portfolio-item animate-zoom-in';
@@ -25,7 +28,7 @@ function appendProjectCard(project: any) {
           <p>${project?.description ?? ''}</p>
           <div class="portfolio-footer">
             <hr>
-            ${sourceHtml}
+            ${sourceHtml} ${deleteBtn}
           </div>
         `;
     portfolioGrid.appendChild(wrapper);
@@ -81,6 +84,7 @@ createProjectForm.addEventListener('submit', async (e) => {
             projectDescriptionInput.value = '';
             projectLiveDemoInput.value = '';
             projectSourceCodeInput.value = '';
+            // immediately render the new card
             appendProjectCard(record);
         })
         .catch((error) => {
