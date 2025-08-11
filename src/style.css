@@ -121,10 +121,9 @@ footer,
 .portfolio-item,
 .title,
 .portfolio-grid {
-    transition: background 0.5s cubic-bezier(0.4, 0, 0.2, 1), color 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: background 0s cubic-bezier(0.4, 0, 0.2, 1), color 0s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Pulse animation for theme switch knob */
 @keyframes theme-knob-pulse {
     0% {
         box-shadow: 0 0 0 0 var(--primary-color, #f20000);
@@ -262,9 +261,10 @@ footer a {
 }
 
 .portfolio-item:hover {
+    transition: background 0.1s cubic-bezier(0.4, 0, 0.2, 1), color 0.1s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+    background: var(--portfolio-item-hover-bg);
     transform: translateY(-0px) scale(1.02);
     box-shadow: 0 4px 8px var(--portfolio-item-hover-shadow);
-    background: var(--portfolio-item-hover-bg);
     color: var(--text-color);
 }
 
