@@ -54,10 +54,12 @@ loginForm.addEventListener('submit', async (e) => {
   const passwordInput = document.getElementById('password') as HTMLInputElement;
 
   try {
-    await pb.collection('users').authWithPassword(usernameInput.value, passwordInput.value);
-    localStorage.setItem('isAuthenticated', 'true');
-    setAuthenticatedUI(true);
-    window.location.reload();
+    await pb.collection('users').authWithPassword(usernameInput.value, passwordInput.value).then((res) => {
+      localStorage.setItem('authenticatedUser', JSON.stringify(res.token));
+      localStorage.setItem('isAuthenticated', JSON.stringify(true));
+      setAuthenticatedUI(true);
+      window.location.reload();
+    });
     modal.style.display = 'none';
   } catch (error) {
     alert('Login fehlgeschlagen. Bitte überprüfen Sie Ihre Eingaben.');
