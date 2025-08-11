@@ -282,7 +282,6 @@ footer a {
 
 .theme-switch {
     position: absolute;
-    bottom: 40%;
     right: 1rem;
     top: 1rem;
     display: inline-block;
@@ -343,6 +342,7 @@ input:checked+.slider {
 
 input:checked+.slider:before {
     transform: translateX(45px);
+
     content: "🌙";
     color: var(--moon-color);
     text-shadow: 0 0 12px var(--moon-glow), 0 0 10px #00ffea8b;
@@ -384,7 +384,7 @@ input:checked+.slider:before {
     box-shadow: 0 1px 4px var(--portfolio-item-shadow);
 }
 
-.login-button-icon {
+.login-button-icon, .logout-button-icon {
     width: 36px;
     height: 36px;
     display: inline-flex;
@@ -400,10 +400,16 @@ input:checked+.slider:before {
 }
 
 .login-button-icon::before {
+    content: "🔓";
+    font-size: 1rem;
+    line-height: 1;
+}
+.logout-button-icon::before {
     content: "🔒";
     font-size: 1rem;
     line-height: 1;
 }
+
 
 .login-button:hover .login-button-icon {
     background: var(--primary-color);
@@ -563,7 +569,7 @@ hr {
   border-color: var(--primary-color);
 }
 
-.login-submit {
+.form-submit {
   width: 100%;
   padding: 0.75rem;
   background: var(--primary-color);

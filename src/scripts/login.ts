@@ -5,6 +5,7 @@ const modal = document.getElementById('login-modal') as HTMLDivElement;
 const closeBtn = document.querySelector('.close-modal') as HTMLSpanElement;
 const loginForm = document.getElementById('login-form') as HTMLFormElement;
 const body = document.querySelector('body') as HTMLBodyElement;
+const createProjectButton = document.getElementById('create-project-btn') as HTMLButtonElement;
 
 loginButton.addEventListener('click', () => {
     modal.style.display = 'block';
@@ -23,6 +24,25 @@ window.addEventListener('click', (event) => {
     }
 });
 
+if (localStorage.getItem('isAuthenticated') === 'true') {
+    createProjectButton.style.display = 'block';
+    loginButton.innerHTML = /*html*/ `
+    <button class="logout-button-icon"></button>
+      <span class="logout-text">Logout</span>
+        `;
+    loginButton.addEventListener('click', () => {
+        localStorage.removeItem('isAuthenticated');
+        createProjectButton.style.display = 'none';
+        loginButton.innerHTML = /*html*/ `
+        <button class="login-button-icon"></button>
+          <span class="login-text">Login</span>
+            `;
+        pb.authStore.clear();
+        modal.style.display = 'none';
+        body.style.overflow = 'auto';
+    });
+}
+
 loginForm.addEventListener('submit', async (e) => {
     e.preventDefault();
 
@@ -39,6 +59,15 @@ loginForm.addEventListener('submit', async (e) => {
             body.style.overflow = 'auto';
             passwordInput.value = '';
             localStorage.setItem('isAuthenticated', 'true');
+            createProjectButton.style.display = 'block';
+            loginButton.innerHTML = /*html*/ `
+                <button class="logout-button-icon"></button>
+                <span class="logout-text">Logout</span>
+                    `;
+            loginButton.addEventListener('click', () => {
+                modal.style.display = 'block';
+                body.style.overflow = 'hidden';
+            });
         })
         .catch((error) => {
             console.error('Login failed:', error);
