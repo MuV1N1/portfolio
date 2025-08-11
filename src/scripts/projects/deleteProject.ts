@@ -10,6 +10,7 @@ if (grid) {
     if (!target.classList.contains('delete-project-btn')) return;
 
     const projectId = target.getAttribute('data-id');
+    console.log('Delete button clicked for project ID:', projectId)
     if (!projectId) return;
 
     const confirmDelete = confirm('Sind Sie sicher, dass Sie dieses Projekt löschen möchten? Dies kann nicht rückgängig gemacht werden.');

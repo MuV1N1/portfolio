@@ -263,13 +263,81 @@ footer a {
     margin-top: auto;
     display: flex;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: space-between;
     gap: 0.75rem;
     border-top: 2px solid var(--hr-color);
     padding-top: 0.6rem;
-    min-height: unset;
-    max-height: unset;
-    height: auto;
+}
+
+.footer-left {
+    display: inline-flex;
+    align-items: center;
+    min-width: 0;
+}
+
+.footer-right {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-left: 0;
+}
+
+.portfolio-footer a.source-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.3rem 0.6rem;
+    border: 2px solid var(--portfolio-item-hover-shadow);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--text-color);
+    text-decoration: none;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.portfolio-footer a.source-link:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+.edit-project-btn,
+.delete-project-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 34px;
+    height: 34px;
+    padding: 0.25rem 0.55rem;
+    background: transparent;
+    color: var(--text-color);
+    border: 2px solid var(--portfolio-item-hover-shadow);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.1s, box-shadow 0.2s;
+}
+
+.edit-project-btn:hover,
+.delete-project-btn:hover {
+    border-color: var(--primary-color);
+    box-shadow: 0 2px 6px var(--portfolio-item-hover-shadow);
+    transform: translateY(-1px);
+}
+
+.delete-project-btn:hover {
+    background: var(--primary-color);
+    color: #fff;
+}
+
+.edit-project-btn:active,
+.delete-project-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 3px var(--portfolio-item-shadow);
+}
+
+.portfolio-item .portfolio-footer {
+    border-top: 2px solid var(--hr-color);
+    padding-top: 0.6rem;
 }
 
 .footer-right {
@@ -283,7 +351,11 @@ footer a {
     border-color: var(--primary-color);
     color: var(--primary-color);
 }
-.portfolio-footer .no-source { white-space: nowrap; opacity: 0.9; }
+
+.portfolio-footer .no-source {
+    white-space: nowrap;
+    opacity: 0.9;
+}
 
 .edit-project-btn {
     display: inline-flex;
@@ -295,7 +367,9 @@ footer a {
     cursor: pointer;
 }
 
-.delete-project-btn { margin-left: 0; }
+.delete-project-btn {
+    margin-left: 0;
+}
 
 .portfolio-item:hover {
     transition: background 0.15s cubic-bezier(0.4, 0, 0.2, 1), color 0.15s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -677,8 +751,6 @@ hr {
 }
 
 .create-project-btn {
-    content: "📝";
-
     grid-column: 3;
     justify-self: end;
     background: transparent;

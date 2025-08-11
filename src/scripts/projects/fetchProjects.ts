@@ -28,8 +28,8 @@ export default function fetchProjects() {
           <h3>${projectName}</h3>
           <p>${projectDescription}</p>
           <div class="portfolio-footer">
-            ${editBtn}
-            <div class="footer-right">${projectSourceCode} ${deleteBtn}</div>
+            <div class="footer-left">${projectSourceCode}</div>
+            <div class="footer-right">${editBtn}${deleteBtn}</div>
           </div>
         </div>
     `

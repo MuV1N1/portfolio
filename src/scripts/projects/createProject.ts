@@ -15,9 +15,9 @@ function appendProjectCard(project: any) {
         : project.name;
     const sourceHtml = project?.sourceCodeUrl
         ? `<a href="${project.sourceCodeUrl}" target="_blank" rel="noopener noreferrer">Source code</a>`
-        : 'Kein Source Code';
-    const deleteBtn = isAuthenticated ? `<button class=\"delete-project-btn\" data-id=\"${project.id}\">Löschen</button>` : '';
-    const editBtn = isAuthenticated ? `<button class=\"edit-project-btn\" data-id=\"${project.id}\">Bearbeiten</button>` : '';
+        : '<span class="no-source">Kein Source Code</span>';
+    const deleteBtn = isAuthenticated ? `<button class=\"delete-project-btn\" data-id=\"${project.id}\">🗑️</button>` : '';
+    const editBtn = isAuthenticated ? `<button class=\"edit-project-btn\" data-id=\"${project.id}\">✏️</button>` : '';
 
     const wrapper = document.createElement('div');
     wrapper.className = 'portfolio-item animate-zoom-in';
@@ -27,8 +27,8 @@ function appendProjectCard(project: any) {
           <h3>${nameHtml}</h3>
           <p>${project?.description ?? ''}</p>
           <div class="portfolio-footer">
-            ${editBtn}
-            ${sourceHtml} ${deleteBtn}
+            <div class="footer-left">${sourceHtml}</div>
+            <div class="footer-right">${editBtn}${deleteBtn}</div>
           </div>
         `;
     portfolioGrid.appendChild(wrapper);
