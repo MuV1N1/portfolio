@@ -36,9 +36,17 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
     modal.style.display = 'block';
+  
+    if(localStorage.getItem('lastUserName')) {
+      const usernameInput = document.getElementById('username') as HTMLInputElement | null;
+      if (usernameInput) {
+        usernameInput.value = localStorage.getItem('lastUserName') || '';
+      }
+    }
+    const usernameInput = document.getElementById('username') as HTMLInputElement | null;
+
   });
 
-  // Modal controls
   closeBtn.addEventListener('click', () => {
     modal.style.display = 'none';
   });
@@ -49,7 +57,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Login form submit
   loginForm.addEventListener('submit', async (e) => {
     e.preventDefault();
 
@@ -66,6 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
         renderLoginButton(true);
         modal.style.display = 'none';
         window.location.reload();
+        localStorage.setItem('lastUserName', usernameInput.value);
       }
     } catch (error) {
       alert('Login fehlgeschlagen. Bitte überprüfen Sie Ihre Eingaben.');

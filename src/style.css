@@ -208,7 +208,6 @@ footer a {
     transition: color 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-
 .header-title {
     font-size: 3rem;
     font-weight: 700;
@@ -224,6 +223,13 @@ footer a {
     font-weight: 400;
     letter-spacing: 0.5px;
     margin-bottom: 0;
+}
+
+.about-me {
+    font-size: 1.1rem;
+    color: var(--text-color);
+    padding-bottom: 1rem;
+    line-height: 1.6;
 }
 
 .title {
