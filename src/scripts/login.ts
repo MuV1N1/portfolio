@@ -1,68 +1,79 @@
 import PocketBase from 'pocketbase';
 const pb = new PocketBase('https://muv1n-portfolio.pockethost.io/');
 
-const loginButton = document.querySelector('.login-button') as HTMLLabelElement;
-const modal = document.getElementById('login-modal') as HTMLDivElement;
-const closeBtn = document.querySelector('#login-modal .close-modal') as HTMLSpanElement;
-const loginForm = document.getElementById('login-form') as HTMLFormElement;
-const loginText = document.querySelector('.login-text') as HTMLSpanElement;
+document.addEventListener('DOMContentLoaded', () => {
+  const loginButton = document.querySelector('.login-button') as HTMLLabelElement | null;
+  const modal = document.getElementById('login-modal') as HTMLDivElement | null;
+  const closeBtn = document.querySelector('#login-modal .close-modal') as HTMLSpanElement | null;
+  const loginForm = document.getElementById('login-form') as HTMLFormElement | null;
 
-function setAuthenticatedUI(isAuthenticated: boolean) {
-  if (isAuthenticated) {
-    loginText.textContent = 'Logout';
-    loginButton.innerHTML = `
-      <button class="logout-button-icon"></button>
-      <span class="login-text">Logout</span>
-    `;
-  } else {
-    loginText.textContent = 'Login';
-    loginButton.innerHTML = `
-      <button class="login-button-icon"></button>
-      <span class="login-text">Login</span>
-    `;
-  }
-}
-
-const isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
-setAuthenticatedUI(isAuthenticated);
-
-loginButton.addEventListener('click', () => {
-  const isAuth = localStorage.getItem('isAuthenticated') === 'true';
-  if (isAuth) {
-    localStorage.setItem('isAuthenticated', 'false');
-    setAuthenticatedUI(false);
-    window.location.reload();
+  if (!loginButton || !modal || !closeBtn || !loginForm) {
     return;
   }
-  modal.style.display = 'block';
-});
 
-closeBtn.addEventListener('click', () => {
-  modal.style.display = 'none';
-});
+  const renderLoginButton = (isAuthenticated: boolean) => {
+    loginButton.innerHTML = '';
 
-window.addEventListener('click', (event) => {
-  if (event.target === modal) {
-    modal.style.display = 'none';
-  }
-});
+    const iconBtn = document.createElement('button');
+    iconBtn.className = isAuthenticated ? 'logout-button-icon' : 'login-button-icon';
 
-loginForm.addEventListener('submit', async (e) => {
-  e.preventDefault();
+    const textSpan = document.createElement('span');
+    textSpan.className = 'login-text';
+    textSpan.textContent = isAuthenticated ? 'Logout' : 'Login';
 
-  const usernameInput = document.getElementById('username') as HTMLInputElement;
-  const passwordInput = document.getElementById('password') as HTMLInputElement;
+    loginButton.append(iconBtn, textSpan);
+  };
 
-  try {
-    await pb.collection('users').authWithPassword(usernameInput.value, passwordInput.value).then((res) => {
-      localStorage.setItem('authenticatedUser', JSON.stringify(res.token));
-      localStorage.setItem('isAuthenticated', JSON.stringify(true));
-      setAuthenticatedUI(true);
+  const getIsAuthenticated = () => pb.authStore.isValid;
+
+  renderLoginButton(getIsAuthenticated());
+
+  loginButton.addEventListener('click', () => {
+    if (getIsAuthenticated()) {
+      pb.authStore.clear();
+      renderLoginButton(false);
       window.location.reload();
-    });
+      return;
+    }
+    modal.style.display = 'block';
+  });
+
+  // Modal controls
+  closeBtn.addEventListener('click', () => {
     modal.style.display = 'none';
-  } catch (error) {
-    alert('Login fehlgeschlagen. Bitte überprüfen Sie Ihre Eingaben.');
-  }
+  });
+
+  window.addEventListener('click', (event) => {
+    if (event.target === modal) {
+      modal.style.display = 'none';
+    }
+  });
+
+  // Login form submit
+  loginForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const usernameInput = document.getElementById('username') as HTMLInputElement | null;
+    const passwordInput = document.getElementById('password') as HTMLInputElement | null;
+    if (!usernameInput || !passwordInput) return;
+
+    const submitBtn = loginForm.querySelector('button[type="submit"]') as HTMLButtonElement | null;
+    if (submitBtn) submitBtn.disabled = true;
+
+    try {
+      await pb.collection('users').authWithPassword(usernameInput.value, passwordInput.value);
+      if (pb.authStore.isValid) {
+        localStorage.setItem('isAuthenticated', 'true'); // kept for compatibility with other scripts
+        renderLoginButton(true);
+        modal.style.display = 'none';
+        window.location.reload();
+      }
+    } catch (error) {
+      alert('Login fehlgeschlagen. Bitte überprüfen Sie Ihre Eingaben.');
+    } finally {
+      if (submitBtn) submitBtn.disabled = false;
+      if (passwordInput) passwordInput.value = '';
+    }
+  });
 });
 

@@ -3,6 +3,7 @@ const pb = new PocketBase('https://muv1n-portfolio.pockethost.io/');
 
 const grid = document.getElementById('portfolio-grid') as HTMLDivElement | null;
 
+
 function removeCard(card: HTMLElement) {
   card.style.transition = 'opacity 180ms ease, transform 180ms ease';
   card.style.opacity = '0';
@@ -14,7 +15,8 @@ function removeCard(card: HTMLElement) {
   card.addEventListener('transitionend', onEnd);
 }
 
-if (grid) {
+
+if (grid && pb.authStore.isValid) {
   grid.addEventListener('click', async (e) => {
     const target = e.target as HTMLElement;
 

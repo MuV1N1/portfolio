@@ -7,7 +7,8 @@ const createProjectForm = document.getElementById('create-project-form') as HTML
 const body = document.querySelector('body') as HTMLBodyElement;
 
 const portfolioGrid = document.getElementById('portfolio-grid') as HTMLDivElement | null;
-const isAuthenticated = (typeof localStorage !== 'undefined') && localStorage.getItem('isAuthenticated') === 'true';
+const isAuthenticated = pb.authStore.isValid;
+console.log('isAuthenticated:', isAuthenticated);
 function appendProjectCard(project: any) {
     if (!portfolioGrid) return;
     const nameHtml = project?.liveDemoUrl
@@ -34,7 +35,7 @@ function appendProjectCard(project: any) {
     portfolioGrid.appendChild(wrapper);
 }
 
-if(localStorage.getItem('isAuthenticated') !== 'true') {
+if(!pb.authStore.isValid) {
     createProjectButton.style.display = 'none';
 } else {
     createProjectButton.style.display = 'block';
