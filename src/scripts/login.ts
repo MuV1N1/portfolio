@@ -7,6 +7,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const closeBtn = document.querySelector('#login-modal .close-modal') as HTMLSpanElement | null;
   const loginForm = document.getElementById('login-form') as HTMLFormElement | null;
 
+  if (localStorage.getItem('lastUserName') === null) {
+    localStorage.setItem('lastUserName', '');
+  }
+
   if (!loginButton || !modal || !closeBtn || !loginForm) {
     return;
   }
@@ -36,8 +40,8 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
     modal.style.display = 'block';
-  
-    if(localStorage.getItem('lastUserName')) {
+
+    if (localStorage.getItem('lastUserName')) {
       const usernameInput = document.getElementById('username') as HTMLInputElement | null;
       if (usernameInput) {
         usernameInput.value = localStorage.getItem('lastUserName') || '';
