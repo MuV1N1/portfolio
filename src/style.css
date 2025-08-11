@@ -113,6 +113,9 @@ body {
     line-height: 1.6;
     min-height: 100vh;
 }
+.text-color-primary {
+    color: var(--primary-color);
+}
 
 body,
 main,
@@ -261,7 +264,7 @@ footer a {
 }
 
 .portfolio-item:hover {
-    transition: background 0.1s cubic-bezier(0.4, 0, 0.2, 1), color 0.1s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: background 0.15s cubic-bezier(0.4, 0, 0.2, 1), color 0.15s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     background: var(--portfolio-item-hover-bg);
     transform: translateY(-0px) scale(1.02);
     box-shadow: 0 4px 8px var(--portfolio-item-hover-shadow);
