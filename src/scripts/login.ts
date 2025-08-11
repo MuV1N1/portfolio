@@ -43,7 +43,6 @@ document.addEventListener('DOMContentLoaded', () => {
         usernameInput.value = localStorage.getItem('lastUserName') || '';
       }
     }
-    const usernameInput = document.getElementById('username') as HTMLInputElement | null;
 
   });
 
