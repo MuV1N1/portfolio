@@ -4,7 +4,7 @@ const pb = new PocketBase('https://muv1n-portfolio.pockethost.io/');
 const loginButton = document.querySelector('.login-button') as HTMLLabelElement | null;
 
 console.log('Initializing login script...');
-console.log(loginButton)
+console.log(loginButton);
 
 document.addEventListener('DOMContentLoaded', () => {
   const modal = document.getElementById('login-modal') as HTMLDivElement | null;
@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
       window.location.reload();
       return;
     }
-    //modal.style.display = 'block';
+    modal.style.display = 'block';
 
     if (localStorage.getItem('lastUserName')) {
       const usernameInput = document.getElementById('username') as HTMLInputElement | null;
