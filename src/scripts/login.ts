@@ -6,6 +6,10 @@ const loginButton = document.querySelector('.login-button') as HTMLLabelElement 
 console.log('Initializing login script...');
 console.log(loginButton);
 
+loginButton?.addEventListener('click', () => {
+  console.log('Login button clicked'); 
+});
+
 document.addEventListener('DOMContentLoaded', () => {
   const modal = document.getElementById('login-modal') as HTMLDivElement | null;
   const closeBtn = document.querySelector('#login-modal .close-modal') as HTMLSpanElement | null;
