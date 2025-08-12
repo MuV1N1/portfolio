@@ -8,7 +8,6 @@ const body = document.querySelector('body') as HTMLBodyElement;
 
 const portfolioGrid = document.getElementById('portfolio-grid') as HTMLDivElement | null;
 const isAuthenticated = pb.authStore.isValid;
-console.log('isAuthenticated:', isAuthenticated);
 function appendProjectCard(project: any) {
     if (!portfolioGrid) return;
     const nameHtml = project?.liveDemoUrl

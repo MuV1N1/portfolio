@@ -1,11 +1,7 @@
 import PocketBase from 'pocketbase';
 const pb = new PocketBase('https://muv1n-portfolio.pockethost.io/');
 
-console.log('[login] module loaded');
-
 function initLogin() {
-  console.log('[login] DOM ready, initializing');
-
   const loginButton = document.querySelector('.login-button') as HTMLLabelElement | null;
   const modal = document.getElementById('login-modal') as HTMLDivElement | null;
   const closeBtn = document.querySelector('#login-modal .close-modal') as HTMLSpanElement | null;
@@ -17,7 +13,6 @@ function initLogin() {
   }
 
   const renderLoginButton = (isAuthenticated: boolean) => {
-    console.log('[login] render button, isAuthenticated:', isAuthenticated);
     loginButton.innerHTML = '';
 
     const iconBtn = document.createElement('button');
