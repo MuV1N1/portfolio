@@ -33,6 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderLoginButton(getIsAuthenticated());
 
   loginButton.addEventListener('click', () => {
+    console.log('Login button clicked');
     if (getIsAuthenticated()) {
       pb.authStore.clear();
       renderLoginButton(false);
