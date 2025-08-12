@@ -52,7 +52,7 @@
         href="https://github.com/muv1n1">GitHub</a>, <a href="https://gitlab.com/muv1n/">GitLab</a></p>
   </footer>
 
-  <div class="modal" id="login-modal">
+ <div class="modal" id="login-modal">
     <div class="modal-content">
 
       <span class="close-modal">&times;</span>
@@ -123,6 +123,33 @@
       </form>
     </div>
   </div>
+  <div class="modal" id="confirm-dialog-modal">
+    <div class="modal-content">
+      <span class="close-modal">&times;</span>
+        <p class="confirm-dialog-message"></p>
+        <div class="confirm-dialog-actions">
+            <button class="confirm-dialog-confirm"></button>
+            <button class="confirm-dialog-cancel"></button>
+        </div>
+    </div>
+  </div>
+  <div class="modal" id="alert-dialog-modal">
+    <div class="modal-content">
+      <span class="close-modal">&times;</span>
+        <p class="alert-dialog-message"></p>
+        <div class="alert-dialog-actions">
+            <button class="alert-dialog-confirm"></button>
+        </div>
+    </div>
+    <div class="modal" id="prompt-dialog-modal">
+    <div class="modal-content">
+      <span class="close-modal">&times;</span>
+        <p class="prompt-dialog-message"></p>
+        <div class="prompt-dialog-actions">
+            <button class="prompt-dialog-confirm"></button>
+            <button class="prompt-dialog-cancel"></button>
+        </div>
+    </div>
 
   <div id="app"></div>
 </body>
