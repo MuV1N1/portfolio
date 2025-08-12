@@ -1,6 +1,7 @@
-import PocketBase from 'pocketbase';
-import { modalState } from '../../main';
-const pb = new PocketBase('https://muv1n-portfolio.pockethost.io/');
+import { modalState } from '../../utils/modal.ts';
+import { PocketBaseClient } from '../../services/pocketbaseClient';
+
+const pb = new PocketBaseClient();
 
 const body = document.querySelector('body') as HTMLBodyElement;
 const modal = document.getElementById('edit-project-modal') as HTMLDivElement | null;
@@ -59,7 +60,7 @@ async function handleEditButtonClick(e: Event) {
   currentCardEl = card;
 
   try {
-    const record = await pb.collection('projects').getOne(projectId);
+    const record = await pb.getOne('projects', projectId);
     if (nameInput) nameInput.value = record.name ?? '';
     if (descriptionInput) descriptionInput.value = record.description ?? '';
     if (liveDemoUrlInput) liveDemoUrlInput.value = record.liveDemoUrl ?? '';
@@ -94,7 +95,7 @@ function wireFormSubmit() {
     } as { name: string; description: string; liveDemoUrl?: string; sourceCodeUrl?: string };
 
     try {
-      const updated = await pb.collection('projects').update(currentProjectId, data);
+      const updated = await pb.update('projects', currentProjectId, data);
       if (currentCardEl) updateCardDom(currentCardEl, data);
       closeModal();
       console.log('Projekt aktualisiert:', updated);

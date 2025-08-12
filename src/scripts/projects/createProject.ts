@@ -1,6 +1,7 @@
-import PocketBase from 'pocketbase';
-import { modalState } from '../../main';
-const pb = new PocketBase('https://muv1n-portfolio.pockethost.io/');
+import { modalState } from '../../utils/modal.ts';
+import { PocketBaseClient } from '../../services/pocketbaseClient.ts';
+
+const pb = new PocketBaseClient();
 const createProjectButton = document.getElementById('create-project-btn') as HTMLButtonElement;
 const modal = document.getElementById('create-project-modal') as HTMLDivElement;
 const closeBtn = document.querySelector('#create-project-modal .close-modal') as HTMLSpanElement;
@@ -8,7 +9,7 @@ const createProjectForm = document.getElementById('create-project-form') as HTML
 const body = document.querySelector('body') as HTMLBodyElement;
 
 const portfolioGrid = document.getElementById('portfolio-grid') as HTMLDivElement | null;
-const isAuthenticated = pb.authStore.isValid;
+const isAuthenticated = pb.isAuthenticated;
 
 let project: any = {};
 
@@ -38,7 +39,7 @@ export default async function appendProjectCard() {
     portfolioGrid.appendChild(wrapper);
 }
 
-if(!pb.authStore.isValid) {
+if (!pb.isAuthenticated) {
     createProjectButton.style.display = 'none';
 } else {
     createProjectButton.style.display = 'block';
@@ -84,7 +85,7 @@ createProjectForm.addEventListener('submit', async (e) => {
     };
 
     try {
-        const record = await pb.collection('projects').create(data);
+        const record = await pb.create('projects', data);
         console.log('Project created successfully:', record);
         project = record;
         closeModalAndResetForm();

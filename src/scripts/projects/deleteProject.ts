@@ -1,5 +1,6 @@
-import PocketBase from 'pocketbase';
-const pb = new PocketBase('https://muv1n-portfolio.pockethost.io/');
+import { PocketBaseClient } from "../../services/pocketbaseClient";
+
+const pb = new PocketBaseClient();
 
 function removeCard(card: HTMLElement) {
   card.style.transition = 'opacity 180ms ease, transform 180ms ease';
@@ -24,7 +25,7 @@ function initDelete() {
     const btn = target?.closest('.delete-project-btn') as HTMLElement | null;
     if (!btn) return;
 
-    if (!pb.authStore.isValid) {
+    if (!pb.isAuthenticated) {
       alert('Bitte zuerst einloggen.');
       return;
     }
@@ -36,7 +37,7 @@ function initDelete() {
     if (!confirmDelete) return;
 
     try {
-      await pb.collection('projects').delete(projectId);
+      await pb.delete('projects', projectId);
       const card = btn.closest('.portfolio-item') as HTMLElement | null;
       if (card) removeCard(card);
     } catch (error) {
@@ -46,7 +47,7 @@ function initDelete() {
   });
 }
 
-export default function initDeleteWithDom(){
+export default function initDeleteWithDom() {
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initDelete);
   } else {

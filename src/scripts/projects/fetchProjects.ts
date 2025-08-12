@@ -1,6 +1,5 @@
-import PocketBase from 'pocketbase';
-
-const pb = new PocketBase('https://muv1n-portfolio.pockethost.io/');
+import { PocketBaseClient } from "../../services/pocketbaseClient";
+const pb = new PocketBaseClient();
 
 const portfolioGrid =
   (document.getElementById('portfolio-grid') as HTMLDivElement) ||
@@ -17,8 +16,8 @@ export default async function fetchProjects() {
   if (!portfolioGrid) return console.error("Portfolio grid not found!");
 
   try {
-    const projects = await pb.collection('projects').getFullList({});
-    const isAuthenticated = pb.authStore.isValid;
+    const projects = await pb.getFullList('projects');
+    const isAuthenticated = pb.isAuthenticated;
 
     let html = '';
 

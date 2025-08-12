@@ -1,6 +1,7 @@
-import PocketBase from 'pocketbase';
-import { modalState } from '../main';
-const pb = new PocketBase('https://muv1n-portfolio.pockethost.io/');
+import { modalState } from '../utils/modal.ts';
+import { PocketBaseClient } from '../services/pocketbaseClient';
+
+const pb = new PocketBaseClient();
 
 function initLogin() {
   const loginButton = document.querySelector('.login-button') as HTMLLabelElement | null;
@@ -27,7 +28,7 @@ function initLogin() {
     loginButton.append(iconBtn, textSpan);
   };
 
-  const getIsAuthenticated = () => pb.authStore.isValid;
+  const getIsAuthenticated = () => pb.isAuthenticated;
 
   renderLoginButton(getIsAuthenticated());
 
@@ -35,7 +36,7 @@ function initLogin() {
     e.preventDefault();
     e.stopPropagation();
     if (getIsAuthenticated()) {
-      pb.authStore.clear();
+      pb.auth().clear();
       renderLoginButton(false);
       window.location.reload();
       return;
@@ -71,7 +72,7 @@ function initLogin() {
 
     try {
       await pb.collection('users').authWithPassword(usernameInput.value, passwordInput.value);
-      if (pb.authStore.isValid) {
+      if (pb.isAuthenticated) {
         renderLoginButton(true);
         modal.style.display = 'none';
         window.location.reload();
