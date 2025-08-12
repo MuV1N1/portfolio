@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   const renderLoginButton = (isAuthenticated: boolean) => {
+    console.log('Rendering login button, isAuthenticated:', isAuthenticated);
     loginButton.innerHTML = '';
 
     const iconBtn = document.createElement('button');
@@ -35,12 +36,13 @@ document.addEventListener('DOMContentLoaded', () => {
   loginButton.addEventListener('click', () => {
     console.log('Login button clicked');
     if (getIsAuthenticated()) {
+      console.log('User is authenticated, logging out...');
       pb.authStore.clear();
-      renderLoginButton(false);
+      renderLoginButton(true);
       window.location.reload();
       return;
     }
-    modal.style.display = 'block';
+    //modal.style.display = 'block';
 
     if (localStorage.getItem('lastUserName')) {
       const usernameInput = document.getElementById('username') as HTMLInputElement | null;
