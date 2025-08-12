@@ -1,25 +1,16 @@
 import PocketBase from 'pocketbase';
 const pb = new PocketBase('https://muv1n-portfolio.pockethost.io/');
 
-const loginButton = document.querySelector('.login-button') as HTMLLabelElement | null;
-
-console.log('Initializing login script...');
-console.log(loginButton);
-
-loginButton?.addEventListener('click', () => {
-  console.log('Login button clicked'); 
-});
-
 document.addEventListener('DOMContentLoaded', () => {
+  console.log('[login] DOMContentLoaded');
+
+  const loginButton = document.querySelector('.login-button') as HTMLLabelElement | null;
   const modal = document.getElementById('login-modal') as HTMLDivElement | null;
   const closeBtn = document.querySelector('#login-modal .close-modal') as HTMLSpanElement | null;
   const loginForm = document.getElementById('login-form') as HTMLFormElement | null;
 
-  if (localStorage.getItem('lastUserName') === null) {
-    localStorage.setItem('lastUserName', '');
-  }
-
   if (!loginButton || !modal || !closeBtn || !loginForm) {
+    console.warn('[login] Required DOM nodes missing', { hasLoginButton: !!loginButton, hasModal: !!modal, hasCloseBtn: !!closeBtn, hasLoginForm: !!loginForm });
     return;
   }
 
@@ -41,12 +32,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   renderLoginButton(getIsAuthenticated());
 
-  loginButton.addEventListener('click', () => {
+  loginButton.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
     console.log('Login button clicked');
     if (getIsAuthenticated()) {
       console.log('User is authenticated, logging out...');
       pb.authStore.clear();
-      renderLoginButton(true);
+      renderLoginButton(false);
       window.location.reload();
       return;
     }
@@ -58,7 +51,6 @@ document.addEventListener('DOMContentLoaded', () => {
         usernameInput.value = localStorage.getItem('lastUserName') || '';
       }
     }
-
   });
 
   closeBtn.addEventListener('click', () => {
