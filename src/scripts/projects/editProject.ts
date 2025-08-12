@@ -1,4 +1,5 @@
 import PocketBase from 'pocketbase';
+import { modalState } from '../../main';
 const pb = new PocketBase('https://muv1n-portfolio.pockethost.io/');
 
 const body = document.querySelector('body') as HTMLBodyElement;
@@ -15,14 +16,12 @@ let currentCardEl: HTMLElement | null = null;
 
 function openModal() {
   if (!modal) return;
-  modal.style.display = 'block';
-  body.style.overflow = 'hidden';
+  modalState(modal, body, 'open');
 }
 
 function closeModal() {
   if (!modal) return;
-  modal.style.display = 'none';
-  body.style.overflow = 'auto';
+  modalState(modal, body, 'close');
   currentProjectId = null;
   currentCardEl = null;
 }
@@ -106,7 +105,7 @@ function wireFormSubmit() {
   });
 }
 
-function init() {
+export default function initEdit() {
   wireModalClose();
   wireFormSubmit();
   if (grid) {
@@ -119,4 +118,3 @@ function init() {
   }
 }
 
-init();

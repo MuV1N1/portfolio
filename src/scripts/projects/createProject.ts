@@ -1,4 +1,5 @@
 import PocketBase from 'pocketbase';
+import { modalState } from '../../main';
 const pb = new PocketBase('https://muv1n-portfolio.pockethost.io/');
 const createProjectButton = document.getElementById('create-project-btn') as HTMLButtonElement;
 const modal = document.getElementById('create-project-modal') as HTMLDivElement;
@@ -8,7 +9,10 @@ const body = document.querySelector('body') as HTMLBodyElement;
 
 const portfolioGrid = document.getElementById('portfolio-grid') as HTMLDivElement | null;
 const isAuthenticated = pb.authStore.isValid;
-function appendProjectCard(project: any) {
+
+let project: any = {};
+
+export default async function appendProjectCard() {
     if (!portfolioGrid) return;
     const nameHtml = project?.liveDemoUrl
         ? `<a href="${project.liveDemoUrl}" target="_blank" rel="noopener noreferrer">${project.name}</a>`
@@ -41,53 +45,60 @@ if(!pb.authStore.isValid) {
 }
 
 createProjectButton.addEventListener('click', () => {
-    modal.style.display = 'block';
-    body.style.overflow = 'hidden';
+    modalState(modal, body, 'open');
 });
 
 closeBtn.addEventListener('click', () => {
-    modal.style.display = 'none';
-    body.style.overflow = 'auto';
+    modalState(modal, body, 'close');
 });
 window.addEventListener('click', (event) => {
     if (event.target === modal) {
-        modal.style.display = 'none';
-        body.style.overflow = 'auto';
+        modalState(modal, body, 'close');
+    }
+});
+
+window.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && modal.style.display === 'block') {
+        modalState(modal, body, 'close');
     }
 });
 createProjectForm.addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    const projectNameInput = document.getElementById('project-name') as HTMLInputElement;
-    const projectDescriptionInput = document.getElementById('project-description') as HTMLTextAreaElement;
-    const projectLiveDemoInput = document.getElementById('project-url') as HTMLInputElement;
-    const projectSourceCodeInput = document.getElementById('project-source-code-url') as HTMLInputElement;
+    const formData = new FormData(createProjectForm);
+    const projectName = formData.get('project-name')?.toString().trim() || '';
+    const projectDescription = formData.get('project-description')?.toString().trim() || '';
+    const projectLiveDemo = formData.get('project-url')?.toString().trim() || '';
+    const projectSourceCode = formData.get('project-source-code-url')?.toString().trim() || '';
 
-    const projectName = projectNameInput.value;
-    const projectDescription = projectDescriptionInput.value;
-    const projectLiveDemo = projectLiveDemoInput.value;
-    const projectSourceCode = projectSourceCodeInput.value;
-
-    const data = {
-        "name": projectName,
-        "description": projectDescription,
-        "liveDemoUrl": projectLiveDemo,
-        "sourceCodeUrl": projectSourceCode
+    if (!projectName || !projectDescription) {
+        alert('Please fill in at least the name and description.');
+        return;
     }
 
-    await pb.collection('projects').create(data)
-        .then((record) => {
-            console.log('Project created successfully:', record);
-            modal.style.display = 'none';
-            body.style.overflow = 'auto';
-            projectNameInput.value = '';
-            projectDescriptionInput.value = '';
-            projectLiveDemoInput.value = '';
-            projectSourceCodeInput.value = '';
-            appendProjectCard(record);
-        })
-        .catch((error) => {
-            console.error('Error creating project:', error);
-            alert('Error creating project: ' + error.message);
-        });
+    const data = {
+        name: projectName,
+        description: projectDescription,
+        liveDemoUrl: projectLiveDemo || null,
+        sourceCodeUrl: projectSourceCode || null
+    };
+
+    try {
+        const record = await pb.collection('projects').create(data);
+        console.log('Project created successfully:', record);
+        project = record;
+        closeModalAndResetForm();
+        appendProjectCard();
+    } catch (error: any) {
+        console.error('Error creating project:', error);
+        alert('Error creating project: ' + (error.message || 'Unknown error'));
+    }
 });
+
+function closeModalAndResetForm() {
+    modalState(modal, body, 'close');
+    createProjectForm.reset();
+}
+
+
+

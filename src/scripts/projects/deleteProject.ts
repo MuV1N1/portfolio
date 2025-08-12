@@ -1,9 +1,6 @@
 import PocketBase from 'pocketbase';
 const pb = new PocketBase('https://muv1n-portfolio.pockethost.io/');
 
-const grid = document.getElementById('portfolio-grid') as HTMLDivElement | null;
-
-
 function removeCard(card: HTMLElement) {
   card.style.transition = 'opacity 180ms ease, transform 180ms ease';
   card.style.opacity = '0';
@@ -15,14 +12,24 @@ function removeCard(card: HTMLElement) {
   card.addEventListener('transitionend', onEnd);
 }
 
+function initDelete() {
+  const grid = document.getElementById('portfolio-grid') as HTMLDivElement | null;
+  if (!grid) {
+    console.warn('[delete] portfolio-grid not found');
+    return;
+  }
 
-if (grid && pb.authStore.isValid) {
   grid.addEventListener('click', async (e) => {
-    const target = e.target as HTMLElement;
+    const target = e.target as HTMLElement | null;
+    const btn = target?.closest('.delete-project-btn') as HTMLElement | null;
+    if (!btn) return;
 
-    if (!target.classList.contains('delete-project-btn')) return;
+    if (!pb.authStore.isValid) {
+      alert('Bitte zuerst einloggen.');
+      return;
+    }
 
-    const projectId = target.getAttribute('data-id');
+    const projectId = btn.getAttribute('data-id');
     if (!projectId) return;
 
     const confirmDelete = confirm('Sind Sie sicher, dass Sie dieses Projekt löschen möchten? Dies kann nicht rückgängig gemacht werden.');
@@ -30,11 +37,20 @@ if (grid && pb.authStore.isValid) {
 
     try {
       await pb.collection('projects').delete(projectId);
-      const card = target.closest('.portfolio-item') as HTMLElement | null;
+      const card = btn.closest('.portfolio-item') as HTMLElement | null;
       if (card) removeCard(card);
     } catch (error) {
       console.error('Fehler beim Löschen des Projekts:', error);
       alert('Fehler beim Löschen des Projekts. Bitte versuchen Sie es erneut.');
     }
   });
+}
+
+export default function initDeleteWithDom(){
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initDelete);
+  } else {
+    initDelete();
+  }
+
 }

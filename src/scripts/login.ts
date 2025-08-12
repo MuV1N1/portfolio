@@ -1,9 +1,11 @@
 import PocketBase from 'pocketbase';
+import { modalState } from '../main';
 const pb = new PocketBase('https://muv1n-portfolio.pockethost.io/');
 
 function initLogin() {
   const loginButton = document.querySelector('.login-button') as HTMLLabelElement | null;
   const modal = document.getElementById('login-modal') as HTMLDivElement | null;
+  const body = document.querySelector('body') as HTMLBodyElement;
   const closeBtn = document.querySelector('#login-modal .close-modal') as HTMLSpanElement | null;
   const loginForm = document.getElementById('login-form') as HTMLFormElement | null;
 
@@ -32,15 +34,13 @@ function initLogin() {
   loginButton.addEventListener('click', (e) => {
     e.preventDefault();
     e.stopPropagation();
-    console.log('[login] login button click');
     if (getIsAuthenticated()) {
-      console.log('[login] logging out');
       pb.authStore.clear();
       renderLoginButton(false);
       window.location.reload();
       return;
     }
-    modal.style.display = 'block';
+    modalState(modal, body, 'open');
 
     const usernameInput = document.getElementById('username') as HTMLInputElement | null;
     if (usernameInput) {
@@ -50,12 +50,12 @@ function initLogin() {
   });
 
   closeBtn.addEventListener('click', () => {
-    modal.style.display = 'none';
+    modalState(modal, body, 'close');
   });
 
   window.addEventListener('click', (event) => {
     if (event.target === modal) {
-      modal.style.display = 'none';
+      modalState(modal, body, 'close');
     }
   });
 
@@ -86,9 +86,10 @@ function initLogin() {
   });
 }
 
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initLogin);
-} else {
-  initLogin();
+export default function initLoginWithDom() {
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initLogin);
+  } else {
+    initLogin();
+  }
 }
-
