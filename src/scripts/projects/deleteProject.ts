@@ -1,6 +1,8 @@
 import { PocketBaseClient } from "../../services/pocketbaseClient";
+import { DomClient } from "../../services/domClient";
 
 const pb = new PocketBaseClient();
+const dom = new DomClient();
 
 function removeCard(card: HTMLElement) {
   card.style.transition = 'opacity 180ms ease, transform 180ms ease';
@@ -14,7 +16,7 @@ function removeCard(card: HTMLElement) {
 }
 
 function initDelete() {
-  const grid = document.getElementById('portfolio-grid') as HTMLDivElement | null;
+  const grid = dom.getDivElement(document, 'portfolio-grid');
   if (!grid) {
     console.warn('[delete] portfolio-grid not found');
     return;

@@ -1,17 +1,19 @@
 import { modalState } from '../../utils/modal.ts';
 import { PocketBaseClient } from '../../services/pocketbaseClient';
+import { DomClient } from '../../services/domClient.ts';
 
 const pb = new PocketBaseClient();
+const dom = new DomClient();
 
-const body = document.querySelector('body') as HTMLBodyElement;
-const modal = document.getElementById('edit-project-modal') as HTMLDivElement | null;
-const form = document.getElementById('edit-project-form') as HTMLFormElement | null;
-const nameInput = document.getElementById('edit-project-name') as HTMLInputElement | null;
-const descriptionInput = document.getElementById('edit-project-description') as HTMLTextAreaElement | null;
-const liveDemoUrlInput = document.getElementById('edit-project-url') as HTMLInputElement | null;
-const sourceCodeUrlInput = document.getElementById('edit-project-source-code-url') as HTMLInputElement | null;
+const body = dom.getBody(document);
+const modal = dom.getDivElement(document, 'edit-project-modal');
+const form = dom.getFormElement(document, 'edit-project-form');
+const nameInput = dom.getInputElement(document, 'edit-project-name');
+const descriptionInput = dom.getTextAreaElement(document, 'edit-project-description');
+const liveDemoUrlInput = dom.getInputElement(document, 'edit-project-url');
+const sourceCodeUrlInput = dom.getInputElement(document, 'edit-project-source-code-url');
 
-const grid = document.getElementById('portfolio-grid') as HTMLDivElement | null;
+const grid = dom.getDivElement(document, 'portfolio-grid');
 let currentProjectId: string | null = null;
 let currentCardEl: HTMLElement | null = null;
 

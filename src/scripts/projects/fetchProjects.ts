@@ -1,9 +1,8 @@
 import { PocketBaseClient } from "../../services/pocketbaseClient";
+import { DomClient } from "../../services/domClient";
 const pb = new PocketBaseClient();
-
-const portfolioGrid =
-  (document.getElementById('portfolio-grid') as HTMLDivElement) ||
-  (document.querySelector('.portfolio-grid') as HTMLDivElement);
+const dom = new DomClient();
+const portfolioGrid = dom.getDivElement(document, 'portfolio-grid');
 
 function applyAnimationDelay(container: HTMLDivElement) {
   const items = container.querySelectorAll('.portfolio-item');
@@ -16,7 +15,6 @@ export default async function fetchProjects() {
   if (!portfolioGrid) return console.error("Portfolio grid not found!");
 
   try {
-    // Clear first to avoid partial render flashes
     portfolioGrid.innerHTML = '';
 
     const projects = await pb.getFullList('projects');

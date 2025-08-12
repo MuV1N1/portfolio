@@ -1,14 +1,16 @@
 import { modalState } from '../utils/modal.ts';
 import { PocketBaseClient } from '../services/pocketbaseClient';
+import { DomClient } from '../services/domClient.ts';
 
+const dom = new DomClient();
 const pb = new PocketBaseClient();
 
 function initLogin() {
-  const loginButton = document.querySelector('.login-button') as HTMLLabelElement | null;
-  const modal = document.getElementById('login-modal') as HTMLDivElement | null;
-  const body = document.querySelector('body') as HTMLBodyElement;
-  const closeBtn = document.querySelector('#login-modal .close-modal') as HTMLSpanElement | null;
-  const loginForm = document.getElementById('login-form') as HTMLFormElement | null;
+  const loginButton = dom.getLabelElement(document, 'login-button', 'class');
+  const modal = dom.getDivElement(document, 'login-modal');
+  const body = dom.getBody(document);
+  const closeBtn = dom.getSpanElement(document, '#login-modal .close-modal');
+  const loginForm = dom.getFormElement(document, 'login-form');
 
   if (!loginButton || !modal || !closeBtn || !loginForm) {
     console.warn('[login] Required DOM nodes missing', { hasLoginButton: !!loginButton, hasModal: !!modal, hasCloseBtn: !!closeBtn, hasLoginForm: !!loginForm });

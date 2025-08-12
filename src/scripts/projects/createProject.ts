@@ -1,13 +1,15 @@
 import PocketBase from 'pocketbase';
+import { DomClient } from '../../services/domClient.ts';
 import { modalState } from '../../utils/modal.ts';
 const pb = new PocketBase('https://muv1n-portfolio.pockethost.io/');
-const createProjectButton = document.getElementById('create-project-btn') as HTMLButtonElement;
-const modal = document.getElementById('create-project-modal') as HTMLDivElement;
-const closeBtn = document.querySelector('#create-project-modal .close-modal') as HTMLSpanElement;
-const createProjectForm = document.getElementById('create-project-form') as HTMLFormElement;
-const body = document.querySelector('body') as HTMLBodyElement;
+const dom = new DomClient();
+const createProjectButton = dom.getButtonElement(document, 'create-project-btn');
+const modal = dom.getDivElement(document, 'create-project-modal');
+const closeBtn = dom.getSpanElement(document, '#create-project-modal .close-modal');
+const createProjectForm = dom.getFormElement(document, 'create-project-form');
+const body = dom.getBody(document);
 
-const portfolioGrid = document.getElementById('portfolio-grid') as HTMLDivElement | null;
+const portfolioGrid = dom.getDivElement(document, 'portfolio-grid');
 const isAuthenticated = pb.authStore.isValid;
 
 let lastCreated: any = null;
