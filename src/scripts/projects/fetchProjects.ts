@@ -1,30 +1,48 @@
 import PocketBase from 'pocketbase';
+
 const pb = new PocketBase('https://muv1n-portfolio.pockethost.io/');
 
-const portfolioGrid = (document.getElementById('portfolio-grid') as HTMLDivElement) || (document.querySelector('.portfolio-grid') as HTMLDivElement);
+const portfolioGrid =
+  (document.getElementById('portfolio-grid') as HTMLDivElement) ||
+  (document.querySelector('.portfolio-grid') as HTMLDivElement);
 
-const projects = await pb.collection('projects').getFullList({});
-const isAuthenticated = pb.authStore.isValid;
-
-function applyStagger(container: HTMLDivElement) {
+function applyAnimationDelay(container: HTMLDivElement) {
   const items = container.querySelectorAll('.portfolio-item');
   items.forEach((el, i) => {
     (el as HTMLElement).style.animationDelay = `${i * 0.3}s`;
   });
 }
 
-export default function fetchProjects() {
-  projects.forEach((project) => {
-    const projectName = project.liveDemoUrl ? '<a href="' + project.liveDemoUrl + '" target="_blank">' + project.name + '</a>' : project.name;
-    const projectDescription = project.description;
-    const projectSourceCode = project.sourceCodeUrl
-      ? '<a href="' + project.sourceCodeUrl + '" target="_blank" >Source code</a>'
-      : '<span class="no-source">Kein Source Code</span>';
-    const deleteBtn = isAuthenticated ? '<button class="delete-project-btn" data-id="' + project.id + '">🗑️</button>' : '';
-    const editBtn = isAuthenticated ? '<button class="edit-project-btn" data-id="' + project.id + '">✏️</button>' : '';
+export default async function fetchProjects() {
+  if (!portfolioGrid) return console.error("Portfolio grid not found!");
 
-    portfolioGrid.innerHTML += /*html*/ `
-         <div class="portfolio-item animate-zoom-in">
+  try {
+    const projects = await pb.collection('projects').getFullList({});
+    const isAuthenticated = pb.authStore.isValid;
+
+    let html = '';
+
+    projects.forEach((project) => {
+      const projectName = project.liveDemoUrl
+        ? `<a href="${project.liveDemoUrl}" target="_blank">${project.name}</a>`
+        : project.name;
+
+      const projectDescription = project.description;
+
+      const projectSourceCode = project.sourceCodeUrl
+        ? `<a href="${project.sourceCodeUrl}" target="_blank">Source code</a>`
+        : `<span class="no-source">Kein Source Code</span>`;
+
+      const deleteBtn = isAuthenticated
+        ? `<button class="delete-project-btn" data-id="${project.id}">🗑️</button>`
+        : '';
+
+      const editBtn = isAuthenticated
+        ? `<button class="edit-project-btn" data-id="${project.id}">✏️</button>`
+        : '';
+
+      html += /*html*/ `
+        <div class="portfolio-item animate-zoom-in">
           <h3>${projectName}</h3>
           <p>${projectDescription}</p>
           <div class="portfolio-footer">
@@ -32,9 +50,15 @@ export default function fetchProjects() {
             <div class="footer-right">${editBtn}${deleteBtn}</div>
           </div>
         </div>
-    `
-  });
+      `;
+    });
 
-  applyStagger(portfolioGrid);
+    portfolioGrid.innerHTML = html;
+    applyAnimationDelay(portfolioGrid);
+
+  } catch (error) {
+    console.error("Fehler beim Laden der Projekte:", error);
+  }
 }
+
 fetchProjects();
