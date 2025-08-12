@@ -1,8 +1,12 @@
 import PocketBase from 'pocketbase';
 const pb = new PocketBase('https://muv1n-portfolio.pockethost.io/');
 
+const loginButton = document.querySelector('.login-button') as HTMLLabelElement | null;
+
+console.log('Initializing login script...');
+console.log(loginButton)
+
 document.addEventListener('DOMContentLoaded', () => {
-  const loginButton = document.querySelector('.login-button') as HTMLLabelElement | null;
   const modal = document.getElementById('login-modal') as HTMLDivElement | null;
   const closeBtn = document.querySelector('#login-modal .close-modal') as HTMLSpanElement | null;
   const loginForm = document.getElementById('login-form') as HTMLFormElement | null;
