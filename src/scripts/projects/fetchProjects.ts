@@ -16,6 +16,9 @@ export default async function fetchProjects() {
   if (!portfolioGrid) return console.error("Portfolio grid not found!");
 
   try {
+    // Clear first to avoid partial render flashes
+    portfolioGrid.innerHTML = '';
+
     const projects = await pb.getFullList('projects');
     const isAuthenticated = pb.isAuthenticated;
 
@@ -24,9 +27,9 @@ export default async function fetchProjects() {
     projects.forEach((project) => {
       const projectName = project.liveDemoUrl
         ? `<a href="${project.liveDemoUrl}" target="_blank">${project.name}</a>`
-        : project.name;
+        : project.name ?? '';
 
-      const projectDescription = project.description;
+      const projectDescription = project.description ?? '';
 
       const projectSourceCode = project.sourceCodeUrl
         ? `<a href="${project.sourceCodeUrl}" target="_blank">Source code</a>`
