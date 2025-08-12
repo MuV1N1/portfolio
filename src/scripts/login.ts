@@ -1,8 +1,10 @@
 import PocketBase from 'pocketbase';
 const pb = new PocketBase('https://muv1n-portfolio.pockethost.io/');
 
-document.addEventListener('DOMContentLoaded', () => {
-  console.log('[login] DOMContentLoaded');
+console.log('[login] module loaded');
+
+function initLogin() {
+  console.log('[login] DOM ready, initializing');
 
   const loginButton = document.querySelector('.login-button') as HTMLLabelElement | null;
   const modal = document.getElementById('login-modal') as HTMLDivElement | null;
@@ -15,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   const renderLoginButton = (isAuthenticated: boolean) => {
-    console.log('Rendering login button, isAuthenticated:', isAuthenticated);
+    console.log('[login] render button, isAuthenticated:', isAuthenticated);
     loginButton.innerHTML = '';
 
     const iconBtn = document.createElement('button');
@@ -35,9 +37,9 @@ document.addEventListener('DOMContentLoaded', () => {
   loginButton.addEventListener('click', (e) => {
     e.preventDefault();
     e.stopPropagation();
-    console.log('Login button clicked');
+    console.log('[login] login button click');
     if (getIsAuthenticated()) {
-      console.log('User is authenticated, logging out...');
+      console.log('[login] logging out');
       pb.authStore.clear();
       renderLoginButton(false);
       window.location.reload();
@@ -45,11 +47,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     modal.style.display = 'block';
 
-    if (localStorage.getItem('lastUserName')) {
-      const usernameInput = document.getElementById('username') as HTMLInputElement | null;
-      if (usernameInput) {
-        usernameInput.value = localStorage.getItem('lastUserName') || '';
-      }
+    const usernameInput = document.getElementById('username') as HTMLInputElement | null;
+    if (usernameInput) {
+      const last = localStorage.getItem('lastUserName') || '';
+      usernameInput.value = last;
     }
   });
 
@@ -88,5 +89,11 @@ document.addEventListener('DOMContentLoaded', () => {
       if (passwordInput) passwordInput.value = '';
     }
   });
-});
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initLogin);
+} else {
+  initLogin();
+}
 
