@@ -37,5 +37,8 @@ export class DomClient {
     getButtonElement(document: Document, id: string): HTMLButtonElement {
         return document.getElementById(id) as HTMLButtonElement;
     }
+    getElementByClassOfElement(element: HTMLElement, value: string): HTMLFormElement | null {
+        return element.querySelector(value) as HTMLFormElement | null;
+    }
 
 }

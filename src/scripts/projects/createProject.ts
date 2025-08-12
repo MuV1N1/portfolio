@@ -3,14 +3,6 @@ import { DomClient } from '../../services/domClient.ts';
 import { modalState } from '../../utils/modal.ts';
 const pb = new PocketBase('https://muv1n-portfolio.pockethost.io/');
 const dom = new DomClient();
-const createProjectButton = dom.getButtonElement(document, 'create-project-btn');
-const modal = dom.getDivElement(document, 'create-project-modal');
-const closeBtn = dom.getSpanElement(document, '#create-project-modal .close-modal');
-const createProjectForm = dom.getFormElement(document, 'create-project-form');
-const body = dom.getBody(document);
-
-const portfolioGrid = dom.getDivElement(document, 'portfolio-grid');
-const isAuthenticated = pb.authStore.isValid;
 
 let lastCreated: any = null;
 
@@ -18,18 +10,20 @@ export function setLastCreated(record: any) {
   lastCreated = record;
 }
 
-export default async function appendProjectCard() {
+function appendProjectCard() {
+  const portfolioGrid = dom.getDivElement(document, 'portfolio-grid');
   if (!portfolioGrid || !lastCreated) return;
   const project = lastCreated;
 
+  const isAuthenticated = pb.authStore.isValid;
   const nameHtml = project?.liveDemoUrl
     ? `<a href="${project.liveDemoUrl}" target="_blank" rel="noopener noreferrer">${project.name}</a>`
     : project.name ?? '';
   const sourceHtml = project?.sourceCodeUrl
     ? `<a href="${project.sourceCodeUrl}" target="_blank" rel="noopener noreferrer">Source code</a>`
     : '<span class="no-source">Kein Source Code</span>';
-  const deleteBtn = isAuthenticated ? `<button class=\"delete-project-btn\" data-id=\"${project.id}\">🗑️</button>` : '';
-  const editBtn = isAuthenticated ? `<button class=\"edit-project-btn\" data-id=\"${project.id}\">✏️</button>` : '';
+  const deleteBtn = isAuthenticated ? `<button class="delete-project-btn" data-id="${project.id}">🗑️</button>` : '';
+  const editBtn = isAuthenticated ? `<button class="edit-project-btn" data-id="${project.id}">✏️</button>` : '';
 
   const wrapper = document.createElement('div');
   wrapper.className = 'portfolio-item animate-zoom-in';
@@ -46,66 +40,91 @@ export default async function appendProjectCard() {
   portfolioGrid.appendChild(wrapper);
 }
 
-if (!pb.authStore.isValid) {
-  createProjectButton.style.display = 'none';
-} else {
-  createProjectButton.style.display = 'block';
-}
+function initCreateProject() {
+  const createProjectButton = dom.getButtonElement(document, 'create-project-btn');
+  const modal = dom.getDivElement(document, 'create-project-modal');
+  const closeBtn = dom.getSpanElement(document, '#create-project-modal .close-modal');
+  const createProjectForm = dom.getFormElement(document, 'create-project-form');
+  const body = dom.getBody(document);
 
-createProjectButton.addEventListener('click', () => {
-  modalState(modal, body, 'open');
-});
-
-closeBtn.addEventListener('click', () => {
-  modalState(modal, body, 'close');
-});
-window.addEventListener('click', (event) => {
-  if (event.target === modal) {
-    modalState(modal, body, 'close');
-  }
-});
-
-window.addEventListener('keydown', (event) => {
-  if (event.key === 'Escape' && modal.style.display === 'block') {
-    modalState(modal, body, 'close');
-  }
-});
-createProjectForm.addEventListener('submit', async (e) => {
-  e.preventDefault();
-
-  const formData = new FormData(createProjectForm);
-  const projectName = formData.get('project-name')?.toString().trim() || '';
-  const projectDescription = formData.get('project-description')?.toString().trim() || '';
-  const projectLiveDemo = formData.get('project-url')?.toString().trim() || '';
-  const projectSourceCode = formData.get('project-source-code-url')?.toString().trim() || '';
-
-  if (!projectName || !projectDescription) {
-    alert('Please fill in at least the name and description.');
+  if (!createProjectButton || !modal || !closeBtn || !createProjectForm || !body) {
+    console.warn('[create] Required DOM nodes missing', {
+      hasBtn: !!createProjectButton,
+      hasModal: !!modal,
+      hasClose: !!closeBtn,
+      hasForm: !!createProjectForm,
+      hasBody: !!body,
+    });
     return;
   }
 
-  const data = {
-    name: projectName,
-    description: projectDescription,
-    liveDemoUrl: projectLiveDemo || null,
-    sourceCodeUrl: projectSourceCode || null,
-  };
-
-  try {
-    const record = await pb.collection('projects').create(data);
-    console.log('Project created successfully:', record);
-    setLastCreated(record);
-    closeModalAndResetForm();
-    appendProjectCard();
-  } catch (error: any) {
-    console.error('Error creating project:', error);
-    alert('Error creating project: ' + (error.message || 'Unknown error'));
+  if (!pb.authStore.isValid) {
+    createProjectButton.style.display = 'none';
+  } else {
+    createProjectButton.style.display = 'block';
   }
-});
 
-function closeModalAndResetForm() {
-  modalState(modal, body, 'close');
-  createProjectForm.reset();
+  createProjectButton.addEventListener('click', () => {
+    console.log('Create project button clicked');
+    modalState(modal, body, 'open');
+  });
+
+  closeBtn.addEventListener('click', () => {
+    modalState(modal, body, 'close');
+  });
+  window.addEventListener('click', (event) => {
+    if (event.target === modal) {
+      modalState(modal, body, 'close');
+    }
+  });
+
+  window.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && modal.style.display === 'block') {
+      modalState(modal, body, 'close');
+    }
+  });
+
+  createProjectForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(createProjectForm);
+    const projectName = formData.get('project-name')?.toString().trim() || '';
+    const projectDescription = formData.get('project-description')?.toString().trim() || '';
+    const projectLiveDemo = formData.get('project-url')?.toString().trim() || '';
+    const projectSourceCode = formData.get('project-source-code-url')?.toString().trim() || '';
+
+    if (!projectName || !projectDescription) {
+      alert('Please fill in at least the name and description.');
+      return;
+    }
+
+    const data = {
+      name: projectName,
+      description: projectDescription,
+      liveDemoUrl: projectLiveDemo || null,
+      sourceCodeUrl: projectSourceCode || null,
+    };
+
+    try {
+      const record = await pb.collection('projects').create(data);
+      console.log('Project created successfully:', record);
+      setLastCreated(record);
+      modalState(modal, body, 'close');
+      createProjectForm.reset();
+      appendProjectCard();
+    } catch (error: any) {
+      console.error('Error creating project:', error);
+      alert('Error creating project: ' + (error.message || 'Unknown error'));
+    }
+  });
+}
+
+export default function initCreateProjectWithDom() {
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initCreateProject);
+  } else {
+    initCreateProject();
+  }
 }
 
 

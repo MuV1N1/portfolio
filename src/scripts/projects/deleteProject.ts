@@ -1,5 +1,6 @@
 import { PocketBaseClient } from "../../services/pocketbaseClient";
 import { DomClient } from "../../services/domClient";
+import { customConfirm } from "../../utils/dialog";
 
 const pb = new PocketBaseClient();
 const dom = new DomClient();
@@ -35,8 +36,12 @@ function initDelete() {
     const projectId = btn.getAttribute('data-id');
     if (!projectId) return;
 
-    const confirmDelete = confirm('Sind Sie sicher, dass Sie dieses Projekt löschen möchten? Dies kann nicht rückgängig gemacht werden.');
-    if (!confirmDelete) return;
+    const confirmed = await customConfirm({
+      message: 'Sind Sie sicher, dass Sie dieses Projekt löschen möchten? Dies kann nicht rückgängig gemacht werden.',
+      confirmText: 'Löschen',
+      cancelText: 'Abbrechen'
+    });
+    if (!confirmed) return;
 
     try {
       await pb.delete('projects', projectId);
