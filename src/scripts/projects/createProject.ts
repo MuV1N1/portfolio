@@ -1,8 +1,7 @@
 import { DomClient } from '../services/domClient.ts';
 import { addEventListenerToModal, modalState } from '../../utils/modal.ts';
-import { FirebaseClient } from '../services/firebaseClient.ts';
+import { firebaseClient } from '../services/firebaseClient.ts';
 
-const fireBase = new FirebaseClient();
 const dom = new DomClient();
 
 let lastCreated: any = null;
@@ -16,7 +15,7 @@ function appendProjectCard() {
   if (!portfolioGrid || !lastCreated) return;
   const project = lastCreated;
 
-  const isAuthenticated = fireBase.isAuthenticated;
+  const isAuthenticated = firebaseClient.isAuthenticated;
   const nameHtml = project?.liveDemoUrl
     ? `<a href="${project.liveDemoUrl}" target="_blank" rel="noopener noreferrer">${project.name}</a>`
     : project.name ?? '';
@@ -59,14 +58,16 @@ function initCreateProject() {
     return;
   }
 
-  if (fireBase.isAuthenticated) {
-    createProjectButton.style.display = 'none';
-  } else {
-    createProjectButton.style.display = 'block';
-  }
+  // Hide initially; show when auth state is known and on subsequent changes
+  createProjectButton.style.display = 'none';
+  firebaseClient.ready.then(() => {
+    createProjectButton.style.display = firebaseClient.isAuthenticated ? 'block' : 'none';
+  });
+  firebaseClient.onAuthChange((authed) => {
+    createProjectButton.style.display = authed ? 'block' : 'none';
+  });
 
   createProjectButton.addEventListener('click', () => {
-    console.log('Create project button clicked');
     modalState(modal, body, 'open');
   });
 
@@ -98,8 +99,7 @@ function initCreateProject() {
     };
 
     try {
-      const record = await fireBase.create('projects', data);
-      console.log('Project created successfully:', record);
+      const record = await firebaseClient.create('projects', data);
       setLastCreated(record);
       modalState(modal, body, 'close');
       createProjectForm.reset();

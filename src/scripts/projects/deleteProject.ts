@@ -1,8 +1,7 @@
-import { PocketBaseClient } from "../services/pocketbaseClient";
+import { firebaseClient } from "../services/firebaseClient";
 import { DomClient } from "../services/domClient";
 import { customConfirm } from "../../utils/dialog";
 
-const pb = new PocketBaseClient();
 const dom = new DomClient();
 
 function removeCard(card: HTMLElement) {
@@ -15,7 +14,6 @@ function removeCard(card: HTMLElement) {
   };
   card.addEventListener('transitionend', onEnd);
 }
-
 function initDelete() {
   const grid = dom.getDivElement(document, 'portfolio-grid');
   if (!grid) {
@@ -28,7 +26,7 @@ function initDelete() {
     const btn = target?.closest('.delete-project-btn') as HTMLElement | null;
     if (!btn) return;
 
-    if (!pb.isAuthenticated) {
+    if (!firebaseClient.isAuthenticated) {
       alert('Bitte zuerst einloggen.');
       return;
     }
@@ -45,7 +43,7 @@ function initDelete() {
     if (!confirmed) return;
 
     try {
-      await pb.delete('projects', projectId);
+      await firebaseClient.delete('projects', projectId);
       const card = btn.closest('.portfolio-item') as HTMLElement | null;
       if (card) removeCard(card);
     } catch (error) {

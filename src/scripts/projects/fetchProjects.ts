@@ -1,7 +1,6 @@
-import { FirebaseClient } from "../services/firebaseClient";
+import { firebaseClient } from "../services/firebaseClient";
 import { DomClient } from "../services/domClient";
 import type { Project } from "../interfaces/project";
-const fb = new FirebaseClient();
 const dom = new DomClient();
 const portfolioGrid = dom.getDivElement(document, 'portfolio-grid');
 
@@ -18,8 +17,8 @@ export default async function fetchProjects() {
   try {
     portfolioGrid.innerHTML = '';
 
-    const projects: Project[] = await fb.getFullList('projects');
-    const isAuthenticated = fb.isAuthenticated;
+    const projects: Project[] = await firebaseClient.getFullList('projects');
+    const isAuthenticated = firebaseClient.isAuthenticated;
 
     let html = '';
 

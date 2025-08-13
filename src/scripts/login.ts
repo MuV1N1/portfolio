@@ -1,9 +1,8 @@
 import { addEventListenerToModal, modalState } from '../utils/modal.ts';
-import { FirebaseClient } from './services/firebaseClient.ts';
+import { firebaseClient } from './services/firebaseClient.ts';
 import { DomClient } from './services/domClient.ts';
 
 const dom = new DomClient();
-const fireBase = new FirebaseClient();
 
 function initLogin() {
   const loginButton = dom.getLabelElement(document, 'login-button', 'class');
@@ -30,17 +29,16 @@ function initLogin() {
     loginButton.append(iconBtn, textSpan);
   };
 
-  const getIsAuthenticated = () => fireBase.isAuthenticated;
-
-  renderLoginButton(getIsAuthenticated());
+  // Initialize based on current (possibly not yet resolved) auth state, then update when ready/changed
+  renderLoginButton(firebaseClient.isAuthenticated);
+  firebaseClient.ready.then(() => renderLoginButton(firebaseClient.isAuthenticated));
+  firebaseClient.onAuthChange((authed) => renderLoginButton(authed));
 
   loginButton.addEventListener('click', (e) => {
     e.preventDefault();
     e.stopPropagation();
-    if (getIsAuthenticated()) {
-      fireBase.auth().clear();
-      renderLoginButton(false);
-      window.location.reload();
+    if (firebaseClient.isAuthenticated) {
+      firebaseClient.auth().clear();
       return;
     }
     modalState(modal, body, 'open');
@@ -69,13 +67,15 @@ function initLogin() {
     if (submitBtn) submitBtn.disabled = true;
 
     try {
-      await fireBase.collection('users').authWithPassword(usernameInput.value, passwordInput.value);
-      if (fireBase.isAuthenticated) {
-        renderLoginButton(true);
-        modal.style.display = 'none';
-        window.location.reload();
-        localStorage.setItem('lastUserName', usernameInput.value);
+      const usersCollection = firebaseClient.collection('users') as any;
+      if (usersCollection && typeof usersCollection.authWithPassword === 'function') {
+        await usersCollection.authWithPassword(usernameInput.value, passwordInput.value);
+      } else {
+        throw new Error('authWithPassword is not available on users collection');
       }
+      // UI will update via onAuthChange; also persist last email
+      localStorage.setItem('lastUserName', usernameInput.value);
+      modal.style.display = 'none';
     } catch (error) {
       alert('Login fehlgeschlagen. Bitte überprüfen Sie Ihre Eingaben.');
     } finally {

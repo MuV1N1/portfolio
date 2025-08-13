@@ -1,9 +1,8 @@
 import { modalState, addEventListenerToModal } from '../../utils/modal.ts';
-import { PocketBaseClient } from '../services/pocketbaseClient.ts';
+import { firebaseClient } from '../services/firebaseClient.ts';
 import { DomClient } from '../services/domClient.ts';
 import { customConfirm } from '../../utils/dialog.ts';
 
-const pb = new PocketBaseClient();
 const dom = new DomClient();
 
 const body = dom.getBody(document);
@@ -63,7 +62,7 @@ async function handleEditButtonClick(e: Event) {
   currentCardEl = card;
 
   try {
-    const record = await pb.getOne('projects', projectId);
+    const record = await firebaseClient.getOne('projects', projectId);
     if (nameInput) nameInput.value = record.name ?? '';
     if (descriptionInput) descriptionInput.value = record.description ?? '';
     if (liveDemoUrlInput) liveDemoUrlInput.value = record.liveDemoUrl ?? '';
@@ -109,7 +108,7 @@ function wireFormSubmit() {
         closeModal();
         return;
       };
-      const updated = await pb.update('projects', currentProjectId, data);
+      const updated = await firebaseClient.update('projects', currentProjectId, data);
       if (currentCardEl) updateCardDom(currentCardEl, data);
       closeModal();
       console.log('Projekt aktualisiert:', updated);

@@ -23,17 +23,37 @@ const firebaseConfig = {
   measurementId: "G-15264DP83F"
 };
 
-
 export class FirebaseClient {
   private app = initializeApp(firebaseConfig);
   private authInstance = getAuth(this.app);
   private db = getFirestore(this.app);
   private _isAuthenticated = false;
+  private _subs: Array<(authed: boolean) => void> = [];
+  private _resolveReady?: () => void;
+  ready: Promise<void>;
 
   constructor() {
+    this.ready = new Promise<void>((resolve) => {
+      this._resolveReady = resolve;
+    });
+
     onAuthStateChanged(this.authInstance, (user) => {
       this._isAuthenticated = !!user;
+      if (this._resolveReady) {
+        this._resolveReady();
+        this._resolveReady = undefined;
+      }
+      this._subs.forEach((fn) => {
+        try { fn(this._isAuthenticated); } catch {}
+      });
     });
+  }
+
+  onAuthChange(cb: (authed: boolean) => void) {
+    this._subs.push(cb);
+    return () => {
+      this._subs = this._subs.filter((f) => f !== cb);
+    };
   }
 
   get isAuthenticated() {
@@ -96,3 +116,6 @@ export class FirebaseClient {
     await deleteDoc(ref);
   }
 }
+
+export const firebaseClient = new FirebaseClient();
+export default firebaseClient;
