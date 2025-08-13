@@ -3,7 +3,7 @@ import { FirebaseClient } from './services/firebaseClient.ts';
 import { DomClient } from './services/domClient.ts';
 
 const dom = new DomClient();
-const fireBase = new FirebaseClient();
+const pb = new FirebaseClient();
 
 function initLogin() {
   const loginButton = dom.getLabelElement(document, 'login-button', 'class');
@@ -30,7 +30,7 @@ function initLogin() {
     loginButton.append(iconBtn, textSpan);
   };
 
-  const getIsAuthenticated = () => fireBase.isAuthenticated;
+  const getIsAuthenticated = () => pb.isAuthenticated;
 
   renderLoginButton(getIsAuthenticated());
 
@@ -38,7 +38,7 @@ function initLogin() {
     e.preventDefault();
     e.stopPropagation();
     if (getIsAuthenticated()) {
-      fireBase.auth().clear();
+      pb.auth().clear();
       renderLoginButton(false);
       window.location.reload();
       return;
@@ -69,8 +69,8 @@ function initLogin() {
     if (submitBtn) submitBtn.disabled = true;
 
     try {
-      await fireBase.collection('users').authWithPassword(usernameInput.value, passwordInput.value);
-      if (fireBase.isAuthenticated) {
+      await pb.collection('users').authWithPassword(usernameInput.value, passwordInput.value);
+      if (pb.isAuthenticated) {
         renderLoginButton(true);
         modal.style.display = 'none';
         window.location.reload();
