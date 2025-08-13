@@ -1,6 +1,6 @@
 import { PocketBaseClient } from "../services/pocketbaseClient";
 import { DomClient } from "../services/domClient";
-import { customConfirm, customPrompt } from "../../utils/dialog";
+import { customConfirm } from "../../utils/dialog";
 
 const pb = new PocketBaseClient();
 const dom = new DomClient();

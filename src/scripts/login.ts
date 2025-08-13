@@ -1,4 +1,4 @@
-import { modalState } from '../utils/modal.ts';
+import { addEventListenerToModal, modalState } from '../utils/modal.ts';
 import { PocketBaseClient } from './services/pocketbaseClient.ts';
 import { DomClient } from './services/domClient.ts';
 
@@ -56,11 +56,7 @@ function initLogin() {
     modalState(modal, body, 'close');
   });
 
-  window.addEventListener('click', (event) => {
-    if (event.target === modal) {
-      modalState(modal, body, 'close');
-    }
-  });
+  addEventListenerToModal(modal, body);
 
   loginForm.addEventListener('submit', async (e) => {
     e.preventDefault();

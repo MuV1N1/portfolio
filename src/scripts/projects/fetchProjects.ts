@@ -24,7 +24,7 @@ export default async function fetchProjects() {
 
     projects.forEach((project) => {
       const projectName = project.liveDemoUrl
-        ? `<a href="${project.liveDemoUrl}" target="_blank">${project.name}</a>`
+        ? `<a class="" href="${project.liveDemoUrl}" target="_blank">${project.name}</a>`
         : project.name ?? '';
 
       const projectDescription = project.description;

@@ -1,6 +1,6 @@
 import PocketBase from 'pocketbase';
 import { DomClient } from '../services/domClient.ts';
-import { modalState } from '../../utils/modal.ts';
+import { addEventListenerToModal, modalState } from '../../utils/modal.ts';
 const pb = new PocketBase('https://muv1n-portfolio.pockethost.io/');
 const dom = new DomClient();
 
@@ -72,17 +72,8 @@ function initCreateProject() {
   closeBtn.addEventListener('click', () => {
     modalState(modal, body, 'close');
   });
-  window.addEventListener('click', (event) => {
-    if (event.target === modal) {
-      modalState(modal, body, 'close');
-    }
-  });
 
-  window.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape' && modal.style.display === 'block') {
-      modalState(modal, body, 'close');
-    }
-  });
+  addEventListenerToModal(modal, body);
 
   createProjectForm.addEventListener('submit', async (e) => {
     e.preventDefault();

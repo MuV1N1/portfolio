@@ -1,4 +1,4 @@
-import { modalState } from '../../utils/modal.ts';
+import { modalState, addEventListenerToModal } from '../../utils/modal.ts';
 import { PocketBaseClient } from '../services/pocketbaseClient.ts';
 import { DomClient } from '../services/domClient.ts';
 import { customConfirm } from '../../utils/dialog.ts';
@@ -79,9 +79,8 @@ function wireModalClose() {
   if (!modal) return;
   const closeBtn = modal.querySelector('.close-modal') as HTMLElement | null;
   closeBtn?.addEventListener('click', closeModal);
-  window.addEventListener('click', (event) => {
-    if (event.target === modal) closeModal();
-  });
+  addEventListenerToModal(modal, body);
+
 }
 
 function wireFormSubmit() {
