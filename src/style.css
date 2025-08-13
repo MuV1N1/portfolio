@@ -1,10 +1,26 @@
+:root {
+    --primary-color: #f20000;
+
+    --confirm-dialog-border-color: var(--text-color);
+    --confirm-dialog-border: 2px solid var(--confirm-dialog-border-color);
+    --confirm-dialog-hover-shadow: 0 4px 8px var(--confirm-dialog-border-color);
+
+    --cancel-dialog-border-color: var(--primary-color);
+    --cancel-dialog-border: 2px solid var(--cancel-dialog-border-color);
+    --cancel-dialog-hover-shadow: 0 4px 8px var(--cancel-dialog-border-color);
+
+    --selection-background: #f2000056;
+
+    --main-item-shadow: #00000033;
+    --hr-color: var(--text-color);
+
+    --transition-speed: 0.25s;
+}
+
 .light {
     --bg-color: #fff;
     --text-color: #222;
-    --text-color-secondary: #ddd;
-    --primary-color: #f20000;
-
-    --main-item-shadow: #00000033;
+    --text-color-secondary: #888;
 
     --header-bg: var(--text-color-secondary);
     --header-text-color: #000;
@@ -15,14 +31,7 @@
     --footer-text-color: #222;
 
     --title-background: #e2e2e2;
-
-    --hr-color: var(--text-color);
-
-    --a-fricke-hover: #c00000;
-
     --main-bg-color: #f8f8f8;
-
-    --selection-background: #f2000056;
 
     --portfolio-item-shadow: #0000005f;
     --portfolio-item-hover-shadow: #00000060;
@@ -42,23 +51,12 @@
     --knob-bg-start: #ffffff;
     --knob-bg-end: #ffff00;
 
-    --confirm-dialog-border-color: var(--text-color);
-    --confirm-dialog-border: 2px solid var(--confirm-dialog-border-color);
-    --confirm-dialog-text-color: var(--text-color);
-    --confirm-dialog-hover-shadow: 0 4px 8px var(--confirm-dialog-border-color);
-    --cancel-dialog-border-color: var(--primary-color);
-    --cancel-dialog-border: 2px solid var(--cancel-dialog-border-color);
-    --cancel-dialog-text-color: var(--text-color);
-    --cancel-dialog-hover-shadow: 0 4px 8px var(--cancel-dialog-border-color);
+    --a-fricke-hover: #c00000;
 }
-
 .dark {
     --bg-color: #111;
     --text-color: #ddd;
     --text-color-secondary: #333;
-    --primary-color: #f20000;
-
-    --main-item-shadow: #eeeeeeed;
 
     --header-bg: var(--text-color-secondary);
     --header-text-color: #eee;
@@ -69,14 +67,7 @@
     --footer-text-color: #fff;
 
     --title-background: #333;
-
-    --hr-color: var(--text-color);
-
-    --a-fricke-hover: #ff0000;
-
     --main-bg-color: #222;
-
-    --selection-background: #f5000056;
 
     --portfolio-item-shadow: #ffffff1f;
     --portfolio-item-hover-shadow: #ffffff6f;
@@ -96,14 +87,7 @@
     --knob-bg-start: #444;
     --knob-bg-end: #222;
 
-    --confirm-dialog-border-color: var(--text-color);
-    --confirm-dialog-border: 2px solid var(--confirm-dialog-border-color);
-    --confirm-dialog-text-color: var(--text-color);
-    --confirm-dialog-hover-shadow: 0 4px 8px var(--confirm-dialog-border-color);
-    --cancel-dialog-border-color: var(--primary-color);
-    --cancel-dialog-border: 2px solid var(--cancel-dialog-border-color);
-    --cancel-dialog-text-color: var(--text-color);
-    --cancel-dialog-hover-shadow: 0 4px 8px var(--cancel-dialog-border-color);
+    --a-fricke-hover: #ff0000;
 }
 
 
@@ -114,9 +98,6 @@
     font-family: 'Segoe UI', Arial, sans-serif;
 }
 
-html {
-    scroll-behavior: smooth;
-}
 
 *::selection {
     background: var(--selection-background);
@@ -129,20 +110,15 @@ body {
     color: var(--text-color);
     line-height: 1.6;
     min-height: 100vh;
+    transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
 }
 
 .text-color-primary {
     color: var(--primary-color);
 }
 
-body,
-main,
-.header,
-footer,
-.portfolio-item,
-.title,
-.portfolio-grid {
-    transition: background 0s cubic-bezier(0.4, 0, 0.2, 1), color 0s cubic-bezier(0.4, 0, 0.2, 1);
+*{
+    transition: background var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1), color var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 @keyframes theme-knob-pulse {
@@ -186,7 +162,7 @@ footer,
     opacity: 0;
     pointer-events: none;
     z-index: 1;
-    transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: opacity var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .theme-animating .header::before {
@@ -224,7 +200,7 @@ footer {
 footer a {
     color: var(--primary-color);
     text-decoration: none;
-    transition: color 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: color var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .header-title {
@@ -377,7 +353,7 @@ footer a {
 }
 
 .portfolio-item:hover {
-    transition: background 0.15s cubic-bezier(0.4, 0, 0.2, 1), color 0.15s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: background 0.15s cubic-bezier(0.4, 0, 0.2, 1), color var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1), box-shadow var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
     background: var(--portfolio-item-hover-bg);
     transform: translateY(-0px) scale(1.02);
     box-shadow: 0 4px 8px var(--portfolio-item-hover-shadow);
@@ -418,7 +394,7 @@ footer a {
     right: 0;
     bottom: 0;
     background: linear-gradient(90deg, var(--slider-bg-start) 60%, var(--slider-bg-end) 100%);
-    transition: background 0.4s, box-shadow 0.4s;
+    transition: background var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
     border-radius: 1.5rem;
     border: 2.5px solid var(--primary-color);
     box-shadow: 0 2px 12px var(--slider-shadow), 0 1.5px 4px var(--slider-shadow-knob2);
@@ -483,7 +459,7 @@ input:checked+.slider:before {
     cursor: pointer;
     text-decoration: none;
     box-shadow: 0 2px 8px var(--slider-shadow-knob2);
-    transition: background 0.2s, color 0.2s, box-shadow 0.3s, transform 0.1s, border-color 0.2s;
+    transition: background var(--transition-speed), color var(--transition-speed), box-shadow var(--transition-speed), transform var(--transition-speed), border-color var(--transition-speed);
     z-index: 11;
 }
 
@@ -510,7 +486,7 @@ input:checked+.slider:before {
     background: transparent;
     color: var(--primary-color);
     outline: none;
-    transition: background 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+    transition: background var(--transition-speed), color var(--transition-speed), border-color var(--transition-speed), box-shadow var(--transition-speed);
     cursor: pointer;
 }
 
@@ -590,7 +566,7 @@ hr {
     }
 
     100% {
-        visibility: unset;
+        visibility: visible;
         opacity: 1;
         transform: scale(1);
     }
@@ -662,7 +638,7 @@ textarea {
     border-radius: 5px;
     background: var(--bg-color);
     color: var(--text-color);
-    transition: border-color 0.3s;
+    transition: border-color var(--transition-speed);
 }
 
 .form-group input:focus,
@@ -680,7 +656,7 @@ textarea {
     border-radius: 5px;
     cursor: pointer;
     font-weight: bold;
-    transition: opacity 0.3s;
+    transition: opacity var(--transition-speed);
 }
 
 .dialog-actions {
@@ -699,7 +675,7 @@ textarea {
     border: var(--confirm-dialog-border);
     cursor: pointer;
     font-weight: bold;
-    transition: opacity 0.3s, background 0.3s;
+    transition: opacity var(--transition-speed), background var(--transition-speed);
 }
 
 .dialog-confirm:hover {
@@ -744,7 +720,7 @@ textarea {
     border-radius: 5px;
     background: var(--bg-color);
     color: var(--text-color);
-    transition: border-color 0.3s;
+    transition: border-color var(--transition-speed);
 }
 
 .prompt-dialog-input:focus {
@@ -799,7 +775,7 @@ textarea {
     font-weight: 800;
     cursor: pointer;
     font-size: 1.2rem;
-    transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+    transition: background var(--transition-speed), transform var(--transition-speed), box-shadow var(--transition-speed);
     box-shadow: 0 2px 4px var(--portfolio-item-shadow);
 }
 
@@ -846,40 +822,48 @@ textarea {
     .theme-switch {
         top: 0.5rem;
         right: 0.5rem;
-        width: 72px;
-        height: 36px;
+        width: 34px;
+        height: 34px;
     }
 
     .slider:before {
-        height: 32px;
-        width: 32px;
+        height: 30px;
+        width: 30px;
         line-height: 28px;
         font-size: 1.3rem;
     }
 
     .slider {
         border-width: 2px;
+        transition: background var(--transition-speed) ease, box-shadow var(--transition-speed) ease, content var(--transition-speed) ease;
     }
 
     input:checked + .slider:before {
-        transform: translateX(35px);
+        transform: translateX(0);
     }
 
     .login-button, 
-    .logout-button-icon {
+    .logout-button {
+        border: 2px solid var(--primary-color);
+        box-shadow: none;
         top: 0.5rem;
         left: 0.5rem;
-        padding: 0.25rem 0.25rem 0.25rem 0.25rem;
-        border: 0px;
+        padding: 0.1rem 0.1rem 0.1rem 0.1rem;
+        height: 32px;
+        width: 32px;
     }
-
     
+    .login-button-icon:hover,
+    .logout-button-icon:hover {
+        background: transparent;
+        transform: translateY(-1px);
+    }
 
     .login-button-icon,
     .logout-button-icon {
-        border: 2px solid var(--primary-color);
-        width: 30px;
-        height: 30px;
+        border: 0px;
+        width: 34px;
+        height: 34px;
     }
 
     .login-text {
