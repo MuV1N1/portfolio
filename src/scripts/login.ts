@@ -1,6 +1,6 @@
 import { modalState } from '../utils/modal.ts';
-import { PocketBaseClient } from '../services/pocketbaseClient';
-import { DomClient } from '../services/domClient.ts';
+import { PocketBaseClient } from './services/pocketbaseClient.ts';
+import { DomClient } from './services/domClient.ts';
 
 const dom = new DomClient();
 const pb = new PocketBaseClient();

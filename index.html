@@ -126,29 +126,40 @@
   <div class="modal" id="confirm-dialog-modal">
     <div class="modal-content">
       <span class="close-modal">&times;</span>
-      <p class="confirm-dialog-message"></p>
-      <div class="confirm-dialog-actions">
-        <button class="confirm-dialog-confirm"></button>
-        <button class="confirm-dialog-cancel"></button>
+      <h2 class="confirm-dialog-title"></h2>
+      <div class="dialog-message-container">
+        <p class="confirm-dialog-message"></p>
+      </div>
+      <div class="dialog-actions">
+        <button class="dialog-confirm"></button>
+        <button class="dialog-cancel"></button>
       </div>
     </div>
   </div>
   <div class="modal" id="alert-dialog-modal">
     <div class="modal-content">
       <span class="close-modal">&times;</span>
-      <p class="alert-dialog-message"></p>
-      <div class="alert-dialog-actions">
-        <button class="alert-dialog-confirm"></button>
+      <h2 class="alert-dialog-title"></h2>
+      <div class="dialog-message-container">
+        <p class="alert-dialog-message"></p>
+      </div>
+      <div class="dialog-actions">
+        <button class="dialog-confirm"></button>
       </div>
     </div>
   </div>
   <div class="modal" id="prompt-dialog-modal">
     <div class="modal-content">
       <span class="close-modal">&times;</span>
-      <p class="prompt-dialog-message"></p>
-      <div class="prompt-dialog-actions">
-        <button class="prompt-dialog-confirm"></button>
-        <button class="prompt-dialog-cancel"></button>
+      <h2 class="prompt-dialog-title"></h2>
+      <div class="dialog-message-container">
+        <p class="prompt-dialog-message"></p>
+      </div>
+      <label class="prompt-dialog-input-label"></label>
+      <input type="text" class="prompt-dialog-input" />
+      <div class="dialog-actions">
+        <button class="dialog-confirm"></button>
+        <button class="dialog-cancel"></button>
       </div>
     </div>
 

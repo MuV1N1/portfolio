@@ -1,5 +1,5 @@
-import { PocketBaseClient } from "../../services/pocketbaseClient";
-import { DomClient } from "../../services/domClient";
+import { PocketBaseClient } from "../services/pocketbaseClient";
+import { DomClient } from "../services/domClient";
 const pb = new PocketBaseClient();
 const dom = new DomClient();
 const portfolioGrid = dom.getDivElement(document, 'portfolio-grid');
@@ -27,7 +27,7 @@ export default async function fetchProjects() {
         ? `<a href="${project.liveDemoUrl}" target="_blank">${project.name}</a>`
         : project.name ?? '';
 
-      const projectDescription = project.description ?? '';
+      const projectDescription = project.description;
 
       const projectSourceCode = project.sourceCodeUrl
         ? `<a href="${project.sourceCodeUrl}" target="_blank">Source code</a>`

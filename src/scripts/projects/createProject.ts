@@ -1,5 +1,5 @@
 import PocketBase from 'pocketbase';
-import { DomClient } from '../../services/domClient.ts';
+import { DomClient } from '../services/domClient.ts';
 import { modalState } from '../../utils/modal.ts';
 const pb = new PocketBase('https://muv1n-portfolio.pockethost.io/');
 const dom = new DomClient();

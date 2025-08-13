@@ -1,6 +1,7 @@
 import { modalState } from '../../utils/modal.ts';
-import { PocketBaseClient } from '../../services/pocketbaseClient';
-import { DomClient } from '../../services/domClient.ts';
+import { PocketBaseClient } from '../services/pocketbaseClient.ts';
+import { DomClient } from '../services/domClient.ts';
+import { customConfirm } from '../../utils/dialog.ts';
 
 const pb = new PocketBaseClient();
 const dom = new DomClient();
@@ -96,15 +97,29 @@ function wireFormSubmit() {
       sourceCodeUrl: sourceCodeUrlInput?.value ?? ''
     } as { name: string; description: string; liveDemoUrl?: string; sourceCodeUrl?: string };
 
+
     try {
+      const confirmed = await customConfirm({
+        title: 'Projekt aktualisieren',
+        message: 'Sind Sie sicher, dass Sie dieses Projekt aktualisieren möchten?',
+        confirmText: 'Aktualisieren',
+        cancelText: 'Abbrechen'
+      });
+      if (!confirmed) {
+        form.reset();
+        closeModal();
+        return;
+      };
       const updated = await pb.update('projects', currentProjectId, data);
       if (currentCardEl) updateCardDom(currentCardEl, data);
       closeModal();
       console.log('Projekt aktualisiert:', updated);
+
     } catch (err: any) {
       console.error('Update fehlgeschlagen:', err);
       alert('Update fehlgeschlagen: ' + (err?.message ?? 'Unbekannter Fehler'));
     }
+    form.reset();
   });
 }
 

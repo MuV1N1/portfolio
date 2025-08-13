@@ -10,3 +10,16 @@ export function modalState(modal: HTMLElement, body: HTMLElement, state: 'open' 
       break;
   }
 }
+
+export function addEventListenerToModal(modal: HTMLElement, body: HTMLBodyElement) {
+  modal.addEventListener('click', (event) => {
+    if (event.target === modal) {
+      modalState(modal, body, 'close');
+    }
+  });
+  window.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && modal.style.display === 'block') {
+      modalState(modal, body, 'close');
+    }
+  });
+}

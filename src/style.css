@@ -1,6 +1,7 @@
 .light {
     --bg-color: #fff;
     --text-color: #222;
+    --text-color-secondary: #ddd;
     --primary-color: #f20000;
 
     --main-item-shadow: #00000033;
@@ -23,9 +24,9 @@
 
     --selection-background: #f2000056;
 
-    --portfolio-item-shadow: #0000000d;
+    --portfolio-item-shadow: #0000005f;
     --portfolio-item-hover-shadow: #00000060;
-    --portfolio-item-bg: #fafafa;
+    --portfolio-item-bg: #eee;
     --portfolio-item-hover-bg: #f0f0f0;
 
     --sun-color: #ffff20;
@@ -41,11 +42,20 @@
     --knob-bg-start: #ffffff;
     --knob-bg-end: #ffff00;
 
+    --confirm-dialog-border: 2px solid var(--text-color);
+    --confirm-dialog-border-hover: 2px solid var(--primary-color);
+    --confirm-dialog-text-color: var(--text-color);
+    --confirm-dialog-text-color-hover: var(--text-color-secondary);
+    --cancel-dialog-border: 2px solid var(--primary-color);
+    --cancel-dialog-border-hover: 2px solid var(--text-color);
+    --cancel-dialog-text-color: var(--text-color);
+    --cancel-dialog-text-color-hover: var(--text-color-secondary);
 }
 
 .dark {
     --bg-color: #111;
     --text-color: #ddd;
+    --text-color-secondary: #222;
     --primary-color: #f20000;
 
     --main-item-shadow: #eeeeeeed;
@@ -85,6 +95,15 @@
     --slider-shadow-knob2: #00000030;
     --knob-bg-start: #444;
     --knob-bg-end: #222;
+
+    --confirm-dialog-border: 2px solid var(--text-color);
+    --confirm-dialog-border-hover: 2px solid var(--primary-color);
+    --confirm-dialog-text-color: var(--text-color);
+    --confirm-dialog-text-color-hover: var(--text-color-secondary);
+    --cancel-dialog-border: 2px solid var(--primary-color);
+    --cancel-dialog-border-hover: 2px solid var(--text-color);
+    --cancel-dialog-text-color: var(--text-color);
+    --cancel-dialog-text-color-hover: var(--text-color-secondary);
 }
 
 
@@ -459,7 +478,7 @@ input:checked+.slider:before {
     align-items: center;
     gap: 0.5rem;
     padding: 0.35rem 0.75rem 0.35rem 0.35rem;
-    background: var(--portfolio-item-bg);
+    background: var(--header-bg);
     color: var(--text-color);
     border: 2px solid var(--primary-color);
     border-radius: 999px;
@@ -688,6 +707,77 @@ textarea {
     cursor: pointer;
     font-weight: bold;
     transition: opacity 0.3s;
+}
+
+.dialog-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+}
+
+.dialog-confirm {
+    padding: 0.75rem;
+    min-width: 25%;
+    max-width: 50%;
+    background: var(--primary-color);
+    color: var(--confirm-dialog-text-color);
+    border-radius: 5px;
+    border: var(--confirm-dialog-border);
+    cursor: pointer;
+    font-weight: bold;
+    transition: opacity 0.3s, background 0.3s;
+}
+
+.dialog-confirm:hover {
+    border: var(--confirm-dialog-border-hover);
+    color: var(--confirm-dialog-text-color-hover);
+    background: var(--a-fricke-hover);
+}
+
+.dialog-cancel {
+    padding: 0.5rem 1rem;
+    background: transparent;
+    min-width: 25%;
+    max-width: 50%;
+    color: var(--cancel-dialog-text-color);
+    border: var(--cancel-dialog-border);
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: opacity 0.3s, background 0.3s;
+}
+.dialog-cancel:hover {
+    border: var(--cancel-dialog-border-hover);
+    color: var(--cancel-dialog-text-color-hover);
+    background: var(--primary-color);
+}
+.prompt-dialog-input-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+}
+
+.dialog-message-container {
+    margin-bottom: 1rem;
+    color: var(--text-color);
+    font-weight: 500;
+    font: 1rem;
+    font-style: italic;
+}
+
+.prompt-dialog-input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid var(--portfolio-item-hover-shadow);
+    border-radius: 5px;
+    background: var(--bg-color);
+    color: var(--text-color);
+    transition: border-color 0.3s;
+}
+
+.prompt-dialog-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
 }
 
 .login-submit:hover {
