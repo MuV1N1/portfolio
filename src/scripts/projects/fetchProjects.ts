@@ -1,6 +1,7 @@
-import { PocketBaseClient } from "../services/pocketbaseClient";
+import { FirebaseClient } from "../services/firebaseClient";
 import { DomClient } from "../services/domClient";
-const pb = new PocketBaseClient();
+import type { Project } from "../interfaces/project";
+const fb = new FirebaseClient();
 const dom = new DomClient();
 const portfolioGrid = dom.getDivElement(document, 'portfolio-grid');
 
@@ -17,8 +18,8 @@ export default async function fetchProjects() {
   try {
     portfolioGrid.innerHTML = '';
 
-    const projects = await pb.getFullList('projects');
-    const isAuthenticated = pb.isAuthenticated;
+    const projects: Project[] = await fb.getFullList('projects');
+    const isAuthenticated = fb.isAuthenticated;
 
     let html = '';
 

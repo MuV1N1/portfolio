@@ -1,7 +1,8 @@
-import PocketBase from 'pocketbase';
 import { DomClient } from '../services/domClient.ts';
 import { addEventListenerToModal, modalState } from '../../utils/modal.ts';
-const pb = new PocketBase('https://muv1n-portfolio.pockethost.io/');
+import { FirebaseClient } from '../services/firebaseClient.ts';
+
+const fireBase = new FirebaseClient();
 const dom = new DomClient();
 
 let lastCreated: any = null;
@@ -15,7 +16,7 @@ function appendProjectCard() {
   if (!portfolioGrid || !lastCreated) return;
   const project = lastCreated;
 
-  const isAuthenticated = pb.authStore.isValid;
+  const isAuthenticated = fireBase.isAuthenticated;
   const nameHtml = project?.liveDemoUrl
     ? `<a href="${project.liveDemoUrl}" target="_blank" rel="noopener noreferrer">${project.name}</a>`
     : project.name ?? '';
@@ -58,7 +59,7 @@ function initCreateProject() {
     return;
   }
 
-  if (!pb.authStore.isValid) {
+  if (fireBase.isAuthenticated) {
     createProjectButton.style.display = 'none';
   } else {
     createProjectButton.style.display = 'block';
@@ -97,7 +98,7 @@ function initCreateProject() {
     };
 
     try {
-      const record = await pb.collection('projects').create(data);
+      const record = await fireBase.create('projects', data);
       console.log('Project created successfully:', record);
       setLastCreated(record);
       modalState(modal, body, 'close');

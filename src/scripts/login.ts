@@ -1,9 +1,9 @@
 import { addEventListenerToModal, modalState } from '../utils/modal.ts';
-import { PocketBaseClient } from './services/pocketbaseClient.ts';
+import { FirebaseClient } from './services/firebaseClient.ts';
 import { DomClient } from './services/domClient.ts';
 
 const dom = new DomClient();
-const pb = new PocketBaseClient();
+const fireBase = new FirebaseClient();
 
 function initLogin() {
   const loginButton = dom.getLabelElement(document, 'login-button', 'class');
@@ -30,7 +30,7 @@ function initLogin() {
     loginButton.append(iconBtn, textSpan);
   };
 
-  const getIsAuthenticated = () => pb.isAuthenticated;
+  const getIsAuthenticated = () => fireBase.isAuthenticated;
 
   renderLoginButton(getIsAuthenticated());
 
@@ -38,7 +38,7 @@ function initLogin() {
     e.preventDefault();
     e.stopPropagation();
     if (getIsAuthenticated()) {
-      pb.auth().clear();
+      fireBase.auth().clear();
       renderLoginButton(false);
       window.location.reload();
       return;
@@ -69,8 +69,8 @@ function initLogin() {
     if (submitBtn) submitBtn.disabled = true;
 
     try {
-      await pb.collection('users').authWithPassword(usernameInput.value, passwordInput.value);
-      if (pb.isAuthenticated) {
+      await fireBase.collection('users').authWithPassword(usernameInput.value, passwordInput.value);
+      if (fireBase.isAuthenticated) {
         renderLoginButton(true);
         modal.style.display = 'none';
         window.location.reload();

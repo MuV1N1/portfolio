@@ -16,6 +16,6 @@
     "vite": "^7.0.4"
   },
   "dependencies": {
-    "pocketbase": "^0.26.2"
+    "firebase": "^12.1.0"
   }
 }
