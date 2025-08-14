@@ -485,9 +485,13 @@ input:checked+.slider:before {
 }
 
 .login-button:hover .login-button-icon {
-    background: var(--primary-color);
     color: #fff;
     border-color: var(--primary-color);
+}
+
+.login-button:hover, .logout-button:hover {
+    background: transparent;
+    color: #fff;
 }
 
 .login-text {
