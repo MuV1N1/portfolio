@@ -23,7 +23,7 @@ export function renderProjectCard(project: Project): string {
     : '';
 
   return /*html*/ `
-    <div class="portfolio-item animate-zoom-in" data-project-id="${project.id}">
+    <div class="portfolio-item animate-zoom-in">
       <h3>${projectName}</h3>
       <p>${projectDescription}</p>
       <div class="portfolio-footer">
@@ -39,7 +39,6 @@ export function createProjectElement(project: Project): HTMLElement {
   wrapper.className = 'portfolio-item animate-zoom-in';
   wrapper.style.animationDelay = '0s';
   wrapper.style.visibility = 'visible';
-  wrapper.setAttribute('data-project-id', project.id);
   
   const isAuthenticated = firebaseClient.isAuthenticated;
   
@@ -77,8 +76,8 @@ export function updateExistingProjectButtons() {
     const footerRight = item.querySelector('.footer-right');
     if (!footerRight) return;
     
-    // Get the project ID from the data attribute on the portfolio item
-    const projectId = item.getAttribute('data-project-id');
+    const existingBtn = item.querySelector('.delete-project-btn, .edit-project-btn') as HTMLButtonElement;
+    const projectId = existingBtn?.getAttribute('data-id');
     
     if (!projectId) return;
     
