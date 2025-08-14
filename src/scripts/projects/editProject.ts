@@ -1,7 +1,7 @@
-import { modalState, addEventListenerToModal } from '../../utils/modal.ts';
+import { modalState, addEventListenerToModal } from '../utils/modal.ts';
 import { firebaseClient } from '../services/firebaseClient.ts';
 import { DomClient } from '../services/domClient.ts';
-import { customConfirm } from '../../utils/dialog.ts';
+import { customConfirm } from '../utils/dialog.ts';
 
 const dom = new DomClient();
 

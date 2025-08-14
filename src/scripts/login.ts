@@ -1,4 +1,4 @@
-import { addEventListenerToModal, modalState } from '../utils/modal.ts';
+import { addEventListenerToModal, modalState } from './utils/modal.ts';
 import { firebaseClient } from './services/firebaseClient.ts';
 import { DomClient } from './services/domClient.ts';
 import { updateExistingProjectButtons } from './utils/projectRenderer.ts';
@@ -13,8 +13,12 @@ function initLogin() {
   const loginForm = dom.getFormElement(document, 'login-form');
 
   if (!loginButton || !modal || !closeBtn || !loginForm) {
-    console.warn('[login] Required DOM nodes missing', { hasLoginButton: !!loginButton, hasModal: !!modal, hasCloseBtn: !!closeBtn, hasLoginForm: !!loginForm });
-    return;
+    throw new Error('[login] Required DOM nodes missing' + JSON.stringify({
+      hasLoginButton: !!loginButton,
+      hasModal: !!modal,
+      hasCloseBtn: !!closeBtn,
+      hasLoginForm: !!loginForm
+    }));
   }
 
   const renderLoginButton = (isAuthenticated: boolean) => {
@@ -25,7 +29,7 @@ function initLogin() {
 
     const textSpan = document.createElement('span');
     textSpan.className = 'login-text';
-    textSpan.textContent = isAuthenticated ? 'Logout' : 'Login';
+    textSpan.textContent = isAuthenticated ? 'Abmelden' : 'Anmelden';
 
     loginButton.append(iconBtn, textSpan);
   };
@@ -50,8 +54,6 @@ function initLogin() {
       return;
     }
     modalState(modal, body, 'open');
-    console.log('[login] User is not authenticated, opening login modal');
-    console.log(firebaseClient.auth());
 
     const usernameInput = document.getElementById('username') as HTMLInputElement | null;
     if (usernameInput) {

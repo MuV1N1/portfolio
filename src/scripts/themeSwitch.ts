@@ -3,7 +3,7 @@ const prefersDark: boolean = window.matchMedia('(prefers-color-scheme: dark)').m
 const toggle = document.getElementById('theme-toggle') as HTMLInputElement;
 
 if (!toggle) {
-  console.warn('Theme toggle element not found');
+  throw new Error('Theme toggle input not found');
 }
 
 function editClassList(document: Document, className: string, action: string) {

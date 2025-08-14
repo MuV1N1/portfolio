@@ -1,5 +1,5 @@
 import { modalState, addEventListenerToModal } from "./modal";
-import { DomClient } from "../scripts/services/domClient";
+import { DomClient } from "../services/domClient";
 
 const dom = new DomClient();
 

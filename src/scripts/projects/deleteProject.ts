@@ -1,6 +1,6 @@
 import { firebaseClient } from "../services/firebaseClient";
 import { DomClient } from "../services/domClient";
-import { customConfirm } from "../../utils/dialog";
+import { customConfirm } from "../utils/dialog";
 
 const dom = new DomClient();
 
@@ -17,8 +17,7 @@ function removeCard(card: HTMLElement) {
 function initDelete() {
   const grid = dom.getDivElement(document, 'portfolio-grid');
   if (!grid) {
-    console.warn('[delete] portfolio-grid not found');
-    return;
+    throw new Error('Portfolio grid not found');
   }
 
   grid.addEventListener('click', async (e) => {

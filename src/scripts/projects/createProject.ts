@@ -1,5 +1,5 @@
 import { DomClient } from '../services/domClient.ts';
-import { addEventListenerToModal, modalState } from '../../utils/modal.ts';
+import { addEventListenerToModal, modalState } from '../utils/modal.ts';
 import { firebaseClient } from '../services/firebaseClient.ts';
 import { createProjectElement } from '../utils/projectRenderer.ts';
 
@@ -27,14 +27,13 @@ function initCreateProject() {
   const body = dom.getBody(document);
 
   if (!createProjectButton || !modal || !closeBtn || !createProjectForm || !body) {
-    console.warn('[create] Required DOM nodes missing', {
+    throw new Error('[create] Required DOM nodes missing' + JSON.stringify({
       hasBtn: !!createProjectButton,
       hasModal: !!modal,
       hasClose: !!closeBtn,
       hasForm: !!createProjectForm,
       hasBody: !!body,
-    });
-    return;
+    }));
   }
 
   createProjectButton.style.display = 'none';
