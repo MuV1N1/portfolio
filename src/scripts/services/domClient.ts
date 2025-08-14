@@ -1,5 +1,5 @@
 export class DomClient {
-    querrySelector(document: Document, className: string): HTMLElement | null {
+    querySelector(document: Document, className: string): HTMLElement | null {
         return document.querySelector(`.${className}`);
     }
     getElementById(document: Document, id: string): HTMLElement | null {
@@ -11,7 +11,7 @@ export class DomClient {
     getLabelElement(document: Document, value: string, type: 'id' | 'class'): HTMLLabelElement {
         return type === 'id'
             ? this.getElementById(document, value) as HTMLLabelElement
-            : this.querrySelector(document, value) as HTMLLabelElement;
+            : this.querySelector(document, value) as HTMLLabelElement;
     }
     getFormElement(document: Document, id: string): HTMLFormElement {
         return document.getElementById(id) as HTMLFormElement;

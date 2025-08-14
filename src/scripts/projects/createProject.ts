@@ -37,7 +37,6 @@ function initCreateProject() {
     return;
   }
 
-  // Hide initially; show when auth state is known and on subsequent changes
   createProjectButton.style.display = 'none';
   firebaseClient.ready.then(() => {
     createProjectButton.style.display = firebaseClient.isAuthenticated ? 'block' : 'none';
