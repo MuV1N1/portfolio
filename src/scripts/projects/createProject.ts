@@ -14,7 +14,7 @@ export function setLastCreated(record: any) {
 function appendProjectCard() {
   const portfolioGrid = dom.getDivElement(document, 'portfolio-grid');
   if (!portfolioGrid || !lastCreated) return;
-  
+
   const projectElement = createProjectElement(lastCreated);
   portfolioGrid.appendChild(projectElement);
 }

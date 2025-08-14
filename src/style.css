@@ -183,7 +183,6 @@ body {
     height: 120px;
     border-radius: 50%;
     object-fit: cover;
-    box-shadow: 0 2px 8px var(--main-item-shadow);
     margin-bottom: 1rem;
 }
 
