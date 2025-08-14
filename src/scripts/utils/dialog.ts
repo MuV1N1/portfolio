@@ -27,8 +27,8 @@ type PromptOptions = {
 const body = dom.getBody(document);
 
 function openModal(modal: HTMLElement) {
-    modalState(modal, body, 'open');
-    addEventListenerToModal(modal, body);
+  modalState(modal, body, 'open');
+  addEventListenerToModal(modal, body);
 }
 
 function closeModal(modal: HTMLElement) {
@@ -43,7 +43,7 @@ export function customConfirm({ title, message, confirmText = "Confirm", cancelT
     const confirmBtn = modal.querySelector(".dialog-confirm") as HTMLButtonElement;
     const cancelBtn = modal.querySelector(".dialog-cancel") as HTMLButtonElement;
     const closeBtn = modal.querySelector(".close-modal") as HTMLElement;
-    
+
     titleElement.textContent = title;
     messageElement.textContent = message;
     confirmBtn.textContent = confirmText;
