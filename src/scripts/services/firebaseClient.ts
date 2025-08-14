@@ -1,17 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
-import {
-  getFirestore,
-  collection as fsCollection,
-  getDocs,
-  getDoc,
-  addDoc,
-  updateDoc,
-  deleteDoc,
-  doc,
-  query,
-  orderBy,
-} from 'firebase/firestore/lite';
+import { getFirestore, collection as fsCollection, getDocs, getDoc, addDoc, updateDoc, deleteDoc, doc, query, orderBy } from 'firebase/firestore/lite';
 
 const firebaseConfig = {
   apiKey: "AIzaSyD4YxO3qc5jGYYnmQblgl6PYpnZwU9HfbM",
@@ -44,7 +33,7 @@ export class FirebaseClient {
         this._resolveReady = undefined;
       }
       this._subs.forEach((fn) => {
-        try { fn(this._isAuthenticated); } catch {}
+        try { fn(this._isAuthenticated); } catch { }
       });
     });
   }

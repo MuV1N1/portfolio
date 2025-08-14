@@ -1,6 +1,7 @@
 import { addEventListenerToModal, modalState } from '../utils/modal.ts';
 import { firebaseClient } from './services/firebaseClient.ts';
 import { DomClient } from './services/domClient.ts';
+import { updateExistingProjectButtons } from './utils/projectRenderer.ts';
 
 const dom = new DomClient();
 
@@ -29,19 +30,28 @@ function initLogin() {
     loginButton.append(iconBtn, textSpan);
   };
 
-  // Initialize based on current (possibly not yet resolved) auth state, then update when ready/changed
   renderLoginButton(firebaseClient.isAuthenticated);
-  firebaseClient.ready.then(() => renderLoginButton(firebaseClient.isAuthenticated));
-  firebaseClient.onAuthChange((authed) => renderLoginButton(authed));
+  firebaseClient.ready.then(() => {
+    renderLoginButton(firebaseClient.isAuthenticated);
+    updateExistingProjectButtons();
+  });
+  firebaseClient.onAuthChange((authed) => {
+    renderLoginButton(authed);
+    updateExistingProjectButtons();
+  });
 
   loginButton.addEventListener('click', (e) => {
     e.preventDefault();
     e.stopPropagation();
     if (firebaseClient.isAuthenticated) {
+      console.log('[login] User is authenticated, logging out');
+      console.log(firebaseClient.auth().clear());
       firebaseClient.auth().clear();
       return;
     }
     modalState(modal, body, 'open');
+    console.log('[login] User is not authenticated, opening login modal');
+    console.log(firebaseClient.auth());
 
     const usernameInput = document.getElementById('username') as HTMLInputElement | null;
     if (usernameInput) {
@@ -73,7 +83,6 @@ function initLogin() {
       } else {
         throw new Error('authWithPassword is not available on users collection');
       }
-      // UI will update via onAuthChange; also persist last email
       localStorage.setItem('lastUserName', usernameInput.value);
       modal.style.display = 'none';
     } catch (error) {

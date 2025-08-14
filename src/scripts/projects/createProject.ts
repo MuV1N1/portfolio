@@ -1,6 +1,7 @@
 import { DomClient } from '../services/domClient.ts';
 import { addEventListenerToModal, modalState } from '../../utils/modal.ts';
 import { firebaseClient } from '../services/firebaseClient.ts';
+import { createProjectElement } from '../utils/projectRenderer.ts';
 
 const dom = new DomClient();
 
@@ -13,31 +14,9 @@ export function setLastCreated(record: any) {
 function appendProjectCard() {
   const portfolioGrid = dom.getDivElement(document, 'portfolio-grid');
   if (!portfolioGrid || !lastCreated) return;
-  const project = lastCreated;
-
-  const isAuthenticated = firebaseClient.isAuthenticated;
-  const nameHtml = project?.liveDemoUrl
-    ? `<a href="${project.liveDemoUrl}" target="_blank" rel="noopener noreferrer">${project.name}</a>`
-    : project.name ?? '';
-  const sourceHtml = project?.sourceCodeUrl
-    ? `<a href="${project.sourceCodeUrl}" target="_blank" rel="noopener noreferrer">Source code</a>`
-    : '<span class="no-source">Kein Source Code</span>';
-  const deleteBtn = isAuthenticated ? `<button class="delete-project-btn" data-id="${project.id}">🗑️</button>` : '';
-  const editBtn = isAuthenticated ? `<button class="edit-project-btn" data-id="${project.id}">✏️</button>` : '';
-
-  const wrapper = document.createElement('div');
-  wrapper.className = 'portfolio-item animate-zoom-in';
-  wrapper.style.animationDelay = '0s';
-  wrapper.style.visibility = 'visible';
-  wrapper.innerHTML = `
-        <h3>${nameHtml}</h3>
-        <p>${project?.description ?? ''}</p>
-        <div class="portfolio-footer">
-          <div class="footer-left">${sourceHtml}</div>
-          <div class="footer-right">${editBtn}${deleteBtn}</div>
-        </div>
-      `;
-  portfolioGrid.appendChild(wrapper);
+  
+  const projectElement = createProjectElement(lastCreated);
+  portfolioGrid.appendChild(projectElement);
 }
 
 function initCreateProject() {
