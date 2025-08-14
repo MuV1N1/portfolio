@@ -14,8 +14,6 @@ export function renderProjectCard(project: Project): string {
     ? `<a class="" href="${project.liveDemoUrl}" target="_blank">${project.name}</a>`
     : project.name ?? '';
 
-  const projectDescription = project.description;
-
   const projectSourceCode = project.sourceCodeUrl
     ? `<a href="${project.sourceCodeUrl}" target="_blank">Source code</a>`
     : `<span class="no-source">Kein Source Code</span>`;
@@ -23,7 +21,7 @@ export function renderProjectCard(project: Project): string {
   return `
     <div class="portfolio-item animate-zoom-in" data-project-id="${project.id}">
       <h3>${projectName}</h3>
-      <p>${projectDescription}</p>
+      <p>${project.description}</p>
       <div class="portfolio-footer">
         <div class="footer-left">${projectSourceCode}</div>
         <div class="footer-right">${renderButtons(isAuthenticated, project.id)}</div>

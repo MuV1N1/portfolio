@@ -6,6 +6,8 @@ import { createProjectElement } from '../utils/projectRenderer.ts';
 const dom = new DomClient();
 
 let lastCreated: any = null;
+let isInitialized = false;
+let isSubmitting = false;
 
 export function setLastCreated(record: any) {
   lastCreated = record;
@@ -20,6 +22,11 @@ function appendProjectCard() {
 }
 
 function initCreateProject() {
+  if (isInitialized) {
+    return;
+  }
+  isInitialized = true;
+
   const createProjectButton = dom.getButtonElement(document, 'create-project-btn');
   const modal = dom.getDivElement(document, 'create-project-modal');
   const closeBtn = dom.getSpanElement(document, '#create-project-modal .close-modal');
@@ -57,6 +64,11 @@ function initCreateProject() {
   createProjectForm.addEventListener('submit', async (e) => {
     e.preventDefault();
 
+    if (isSubmitting) {
+      return;
+    }
+    isSubmitting = true;
+
     const formData = new FormData(createProjectForm);
     const projectName = formData.get('project-name')?.toString().trim() || '';
     const projectDescription = formData.get('project-description')?.toString().trim() || '';
@@ -65,6 +77,7 @@ function initCreateProject() {
 
     if (!projectName || !projectDescription) {
       alert('Please fill in at least the name and description.');
+      isSubmitting = false;
       return;
     }
 
@@ -84,6 +97,8 @@ function initCreateProject() {
     } catch (error: any) {
       console.error('Error creating project:', error);
       alert('Error creating project: ' + (error.message || 'Unknown error'));
+    } finally {
+      isSubmitting = false;
     }
   });
 }

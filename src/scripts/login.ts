@@ -86,7 +86,7 @@ function initLogin() {
         throw new Error('authWithPassword is not available on users collection');
       }
       localStorage.setItem('lastUserName', usernameInput.value);
-      modal.style.display = 'none';
+      modalState(modal, body, 'close');
     } catch (error) {
       alert('Login fehlgeschlagen. Bitte überprüfen Sie Ihre Eingaben.');
     } finally {

@@ -5,14 +5,29 @@ import { customConfirm } from "../utils/dialog";
 const dom = new DomClient();
 
 function removeCard(card: HTMLElement) {
-  card.style.transition = 'opacity 180ms ease, transform 180ms ease';
+  console.log('Removing card:', card);
+  
+  card.style.transition = 'opacity 300ms ease, transform 300ms ease';
   card.style.opacity = '0';
-  card.style.transform = 'scale(0.98)';
+  card.style.transform = 'scale(0.95)';
+  
   const onEnd = () => {
+    console.log('Transition ended, removing from DOM');
     card.removeEventListener('transitionend', onEnd);
-    card.parentElement?.removeChild(card);
+    if (card.parentElement) {
+      card.parentElement.removeChild(card);
+    }
   };
+  
   card.addEventListener('transitionend', onEnd);
+  
+  setTimeout(() => {
+    if (card.parentElement) {
+      console.log('Fallback removal triggered');
+      card.removeEventListener('transitionend', onEnd);
+      card.parentElement.removeChild(card);
+    }
+  }, 400);
 }
 function initDelete() {
   const grid = dom.getDivElement(document, 'portfolio-grid');
@@ -44,7 +59,14 @@ function initDelete() {
     try {
       await firebaseClient.delete('projects', projectId);
       const card = btn.closest('.portfolio-item') as HTMLElement | null;
-      if (card) removeCard(card);
+      console.log('Delete button:', btn);
+      console.log('Found card:', card);
+      console.log('Card classes:', card?.className);
+      if (card) {
+        removeCard(card);
+      } else {
+        console.error('Could not find portfolio item card for deletion');
+      }
     } catch (error) {
       console.error('Fehler beim Löschen des Projekts:', error);
       alert('Fehler beim Löschen des Projekts. Bitte versuchen Sie es erneut.');
