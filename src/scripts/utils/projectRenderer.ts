@@ -2,8 +2,9 @@ import { firebaseClient } from '../services/firebaseClient.ts';
 import type { Project } from '../interfaces/project.ts';
 
 function renderButtons(isAuthenticated: boolean, projectId: string) {
-  const deleteBtn = isAuthenticated ? `<button class="delete-project-btn" data-id="${projectId}">🗑️</button>` : '';
-  const editBtn = isAuthenticated ? `<button class="edit-project-btn" data-id="${projectId}">✏️</button>` : '';
+  const isAuthorized = isAuthenticated && firebaseClient.isAuthorizedUser();
+  const deleteBtn = isAuthorized ? `<button class="delete-project-btn" data-id="${projectId}">🗑️</button>` : '';
+  const editBtn = isAuthorized ? `<button class="edit-project-btn" data-id="${projectId}">✏️</button>` : '';
   return `${editBtn}${deleteBtn}`;
 }
 

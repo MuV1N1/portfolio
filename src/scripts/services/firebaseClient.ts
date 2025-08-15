@@ -108,6 +108,10 @@ export class FirebaseClient {
     const ref = doc(this.db, collectionName, id);
     await deleteDoc(ref);
   }
+  isAuthorizedUser(): boolean {
+    const currentUser = this.currentUser;
+    return !!(currentUser && currentUser.uid === '06MDZrzm8kghwU3iwqV7ji3u0Kx2');
+  }
 }
 
 export const firebaseClient = new FirebaseClient();

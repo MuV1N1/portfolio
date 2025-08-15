@@ -22,16 +22,12 @@ function initLogin() {
     }));
   }
 
-  const isAuthorizedUser = () => {
-    const currentUser = firebaseClient.currentUser;
-    return currentUser?.uid === '06MDZrzm8kghwU3iwqV7ji3u0Kx2';
-  };
 
   const renderLoginButton = (isAuthenticated: boolean) => {
     loginButton.innerHTML = '';
 
-    const isAuthorized = isAuthenticated && isAuthorizedUser();
-    
+    const isAuthorized = isAuthenticated && firebaseClient.isAuthorizedUser();
+
     const iconBtn = document.createElement('button');
     iconBtn.className = isAuthorized ? 'logout-button-icon' : 'login-button-icon';
 
@@ -45,13 +41,16 @@ function initLogin() {
   renderLoginButton(firebaseClient.isAuthenticated);
   firebaseClient.ready.then(() => {
     renderLoginButton(firebaseClient.isAuthenticated);
-    if (firebaseClient.isAuthenticated && isAuthorizedUser()) {
+    if (firebaseClient.isAuthenticated && firebaseClient.isAuthorizedUser()) {
       updateExistingProjectButtons();
     }
   });
   firebaseClient.onAuthChange((authed) => {
     renderLoginButton(authed);
-    if (authed && isAuthorizedUser()) {
+    if (authed && firebaseClient.isAuthorizedUser()) {
+      updateExistingProjectButtons();
+    } else {
+      // Make sure buttons are hidden when not authorized or not authenticated
       updateExistingProjectButtons();
     }
   });
@@ -59,7 +58,7 @@ function initLogin() {
   loginButton.addEventListener('click', (e) => {
     e.preventDefault();
     e.stopPropagation();
-    if (firebaseClient.isAuthenticated && isAuthorizedUser()) {
+    if (firebaseClient.isAuthenticated && firebaseClient.isAuthorizedUser()) {
       console.log('[login] User is authenticated, logging out');
       console.log(firebaseClient.auth().clear());
       firebaseClient.auth().clear();
@@ -97,6 +96,8 @@ function initLogin() {
         console.log(auth.user.uid === '06MDZrzm8kghwU3iwqV7ji3u0Kx2');
         if (auth.user.uid !== '06MDZrzm8kghwU3iwqV7ji3u0Kx2') {
           console.log('[login] Unauthorized user, showing alert');
+          // Sign out the unauthorized user immediately
+          await firebaseClient.auth().clear();
           customAlert({
             title: 'Anmeldung fehlgeschlagen',
             message: 'Du bist nicht berechtigt, dich anzumelden.',

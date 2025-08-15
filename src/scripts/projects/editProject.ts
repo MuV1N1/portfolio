@@ -54,6 +54,11 @@ async function handleEditButtonClick(e: Event) {
   const target = e.target as HTMLElement;
   if (!target.classList.contains('edit-project-btn')) return;
 
+  if (!firebaseClient.isAuthenticated || !firebaseClient.isAuthorizedUser()) {
+    alert('Bitte zuerst einloggen.');
+    return;
+  }
+
   const card = target.closest('.portfolio-item') as HTMLElement | null;
   const projectId = target.getAttribute('data-id');
   if (!projectId || !card) return;

@@ -40,7 +40,7 @@ function initDelete() {
     const btn = target?.closest('.delete-project-btn') as HTMLElement | null;
     if (!btn) return;
 
-    if (!firebaseClient.isAuthenticated) {
+    if (!firebaseClient.isAuthenticated || !firebaseClient.isAuthorizedUser()) {
       alert('Bitte zuerst einloggen.');
       return;
     }

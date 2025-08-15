@@ -45,10 +45,12 @@ function initCreateProject() {
 
   createProjectButton.style.display = 'none';
   firebaseClient.ready.then(() => {
-    createProjectButton.style.display = firebaseClient.isAuthenticated ? 'block' : 'none';
+    const isAuthorized = firebaseClient.isAuthenticated && firebaseClient.isAuthorizedUser();
+    createProjectButton.style.display = isAuthorized ? 'block' : 'none';
   });
   firebaseClient.onAuthChange((authed) => {
-    createProjectButton.style.display = authed ? 'block' : 'none';
+    const isAuthorized = authed && firebaseClient.isAuthorizedUser();
+    createProjectButton.style.display = isAuthorized ? 'block' : 'none';
   });
 
   createProjectButton.addEventListener('click', () => {
