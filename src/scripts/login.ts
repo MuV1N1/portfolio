@@ -2,6 +2,7 @@ import { addEventListenerToModal, modalState } from './utils/modal.ts';
 import { firebaseClient } from './services/firebaseClient.ts';
 import { DomClient } from './services/domClient.ts';
 import { updateExistingProjectButtons } from './utils/projectRenderer.ts';
+import { customAlert } from './utils/dialog.ts';
 
 const dom = new DomClient();
 
@@ -21,15 +22,22 @@ function initLogin() {
     }));
   }
 
+  const isAuthorizedUser = () => {
+    const currentUser = firebaseClient.currentUser;
+    return currentUser?.uid === '06MDZrzm8kghwU3iwqV7ji3u0Kx2';
+  };
+
   const renderLoginButton = (isAuthenticated: boolean) => {
     loginButton.innerHTML = '';
 
+    const isAuthorized = isAuthenticated && isAuthorizedUser();
+    
     const iconBtn = document.createElement('button');
-    iconBtn.className = isAuthenticated ? 'logout-button-icon' : 'login-button-icon';
+    iconBtn.className = isAuthorized ? 'logout-button-icon' : 'login-button-icon';
 
     const textSpan = document.createElement('span');
     textSpan.className = 'login-text';
-    textSpan.textContent = isAuthenticated ? 'Abmelden' : 'Anmelden';
+    textSpan.textContent = isAuthorized ? 'Abmelden' : 'Anmelden';
 
     loginButton.append(iconBtn, textSpan);
   };
@@ -37,17 +45,21 @@ function initLogin() {
   renderLoginButton(firebaseClient.isAuthenticated);
   firebaseClient.ready.then(() => {
     renderLoginButton(firebaseClient.isAuthenticated);
-    updateExistingProjectButtons();
+    if (firebaseClient.isAuthenticated && isAuthorizedUser()) {
+      updateExistingProjectButtons();
+    }
   });
   firebaseClient.onAuthChange((authed) => {
     renderLoginButton(authed);
-    updateExistingProjectButtons();
+    if (authed && isAuthorizedUser()) {
+      updateExistingProjectButtons();
+    }
   });
 
   loginButton.addEventListener('click', (e) => {
     e.preventDefault();
     e.stopPropagation();
-    if (firebaseClient.isAuthenticated) {
+    if (firebaseClient.isAuthenticated && isAuthorizedUser()) {
       console.log('[login] User is authenticated, logging out');
       console.log(firebaseClient.auth().clear());
       firebaseClient.auth().clear();
@@ -81,14 +93,29 @@ function initLogin() {
     try {
       const usersCollection = firebaseClient.collection('users') as any;
       if (usersCollection && typeof usersCollection.authWithPassword === 'function') {
-        await usersCollection.authWithPassword(usernameInput.value, passwordInput.value);
+        const auth = await usersCollection.authWithPassword(usernameInput.value, passwordInput.value);
+        console.log(auth.user.uid === '06MDZrzm8kghwU3iwqV7ji3u0Kx2');
+        if (auth.user.uid !== '06MDZrzm8kghwU3iwqV7ji3u0Kx2') {
+          console.log('[login] Unauthorized user, showing alert');
+          customAlert({
+            title: 'Anmeldung fehlgeschlagen',
+            message: 'Du bist nicht berechtigt, dich anzumelden.',
+            confirmText: 'OK'
+          });
+        } else {
+          localStorage.setItem('lastUserName', usernameInput.value);
+          modalState(modal, body, 'close');
+        }
       } else {
         throw new Error('authWithPassword is not available on users collection');
       }
-      localStorage.setItem('lastUserName', usernameInput.value);
-      modalState(modal, body, 'close');
+
     } catch (error) {
-      alert('Login fehlgeschlagen. Bitte überprüfen Sie Ihre Eingaben.');
+      customAlert({
+        title: 'Anmeldung fehlgeschlagen',
+        message: 'Bitte überprüfe deine Anmeldedaten und versuche es erneut.',
+        confirmText: 'Erneut versuchen'
+      })
     } finally {
       if (submitBtn) submitBtn.disabled = false;
       if (passwordInput) passwordInput.value = '';

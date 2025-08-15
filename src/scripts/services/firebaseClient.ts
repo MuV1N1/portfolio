@@ -49,6 +49,10 @@ export class FirebaseClient {
     return this._isAuthenticated;
   }
 
+  get currentUser() {
+    return this.authInstance.currentUser;
+  }
+
   auth() {
     return {
       clear: () => signOut(this.authInstance),
