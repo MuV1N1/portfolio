@@ -20,6 +20,8 @@ export default async function fetchProjects() {
 
     const projects: Project[] = await firebaseClient.getFullList('projects');
 
+    console.log("Projekte geladen:", projects);
+
     let html = '';
     projects.forEach((project) => {
       html += renderProjectCard(project);
